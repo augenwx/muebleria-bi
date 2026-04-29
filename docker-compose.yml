@@ -1,0 +1,13 @@
+services:
+  db_muebleria:
+    image: postgres:15
+    container_name: postgres_bi
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: muebleria_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
