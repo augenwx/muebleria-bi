@@ -1,48 +1,71 @@
-Mueblería BI
-Proyecto de Business Intelligence para optimizar la rentabilidad, la gestión de inventarios y la producción estacional de una empresa de fabricación y venta de muebles de melamina.
+# Mueblería BI
 
-Flujo general del proyecto
-Actualmente el proyecto se encuentra en la Fase 1 (Origen Transaccional). El roadmap completo planificado es el siguiente:
+Proyecto de **Business Intelligence** orientado a optimizar la rentabilidad, la gestión de inventarios y la producción estacional en una empresa de fabricación y venta de muebles de melamina.
 
-Plaintext
-[FASE ACTUAL] PostgreSQL OLTP -> [FUTURO] ETL Manual / Herramientas -> [FUTURO] PostgreSQL DW -> [FUTURO] Power BI
-Arquitectura global planificada
-Aunque actualmente estamos en la base transaccional, la visión a futuro del flujo de datos es esta:
+---
 
-Fragmento de código
+---
+
+## Roadmap del Proyecto
+
+```text
+[FASE ACTUAL] PostgreSQL OLTP 
+    -> [FUTURO] ETL (Manual / Herramientas como Airbyte)
+    -> [FUTURO] PostgreSQL Data Warehouse (Modelo Estrella)
+    -> [FUTURO] Power BI (Visualización)
+```
+
+---
+
+## Arquitectura Objetivo
+
+```mermaid
 flowchart LR
-    A[PostgreSQL OLTP<br/>muebleria] --> B[ETL<br/>Scripts SQL]
+    A[PostgreSQL OLTP<br/>muebleria] --> B[ETL<br/>Scripts SQL / Airbyte]
     B --> C[PostgreSQL DW<br/>Modelo Estrella]
-    C --> D[Power BI<br/>Consumo analitico]
-Estructura del proyecto
-Por el momento, la estructura refleja la etapa inicial del sistema:
+    C --> D[Power BI<br/>Consumo Analítico]
+```
 
-Plaintext
+---
+
+## Estructura del Proyecto
+
+```text
 muebleria-bi/
 ├── oltp-postgres/
 │   ├── base_datos_transaccional.sql
 │   └── README.md
-└── arbyte
-Configuración clave del entorno
-Motor de Base de Datos: PostgreSQL
+└── airbyte/  # (Pendiente de implementación)
+```
 
-Nombre de la Base de Datos: muebleria
+---
 
-Script de Inicialización: base_datos_transaccional.sql
+## Configuración del Entorno
 
-Estructura del Modelo Transaccional (OLTP)
-La base de datos está normalizada para la operación diaria de la carpintería y se divide en dos grandes grupos. Las Tablas de Catálogo definen las entidades de negocio. Incluyen tipo_cliente, tipo_venta, producto, destino_produccion, unidad_medida y categoria_gasto.
+* **Motor de Base de Datos:** PostgreSQL
+* **Base de Datos:** `muebleria`
+* **Script inicial:** `base_datos_transaccional.sql`
 
-Las tablas transaccionales registran los eventos del día a día:
+---
 
+## Modelo Transaccional (OLTP)
 
-venta: Registro individual de productos vendidos por fecha, cliente y precio.
+La base de datos está diseñada bajo principios de **normalización**, enfocada en soportar la operación diaria del negocio.
 
+### Tablas de Catálogo
 
-produccion: Lotes fabricados con sus costos de materia prima y mano de obra.
+* `tipo_cliente`
+* `tipo_venta`
+* `producto`
+* `destino_produccion`
+* `unidad_medida`
+* `categoria_gasto`
 
+### Tablas Transaccionales
 
-inventario: Compras de insumos a proveedores.
+* **venta:** Registro de productos vendidos por fecha, cliente y precio.
+* **produccion:** Lotes fabricados con costos de materia prima y mano de obra.
+* **inventario:** Compras de insumos a proveedores.
+* **gasto_mes:** Gastos operativos fijos y variables.
 
-
-gasto_mes: Registro de gastos operativos fijos y variables.
+---
