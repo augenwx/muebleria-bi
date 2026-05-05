@@ -1,44 +1,40 @@
 -- ============================================================
 --  BASE DE DATOS TRANSACCIONAL - MUEBLERIA / CARPINTERÍA
---  Generado desde: data.xlsx (hojas: venta, producion mes,
---                              inventario, gastos mes)
 --  Moneda: Soles peruanos (S/)
 -- ============================================================
 
--- ── Crear base de datos (ejecutar como superusuario si es necesario) ──
--- CREATE DATABASE muebleria;
--- \c muebleria
+SET search_path TO transaccional, public;
 
 -- ============================================================
 --  TABLAS DE CATÁLOGO / MAESTRAS
 -- ============================================================
 
-CREATE TABLE tipo_cliente (
+CREATE TABLE IF NOT EXISTS tipo_cliente (
     id          SERIAL PRIMARY KEY,
-    nombre      VARCHAR(50) NOT NULL UNIQUE   -- 'Retail', 'Mayorista'
+    nombre      VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE tipo_venta (
+CREATE TABLE IF NOT EXISTS tipo_venta (
     id          SERIAL PRIMARY KEY,
-    nombre      VARCHAR(50) NOT NULL UNIQUE   -- 'Contado', 'Crédito'
+    nombre      VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE producto (
+CREATE TABLE IF NOT EXISTS producto (
     id          SERIAL PRIMARY KEY,
-    nombre      VARCHAR(100) NOT NULL UNIQUE  -- 'Ropero', 'Velador', 'Cómoda', 'Comodín'
+    nombre      VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE destino_produccion (
+CREATE TABLE IF NOT EXISTS destino_produccion (
     id          SERIAL PRIMARY KEY,
-    descripcion VARCHAR(100) NOT NULL UNIQUE  -- 'Stock + pedidos', 'Mayoristas', etc.
+    descripcion VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE unidad_medida (
+CREATE TABLE IF NOT EXISTS unidad_medida (
     id          SERIAL PRIMARY KEY,
-    nombre      VARCHAR(50) NOT NULL UNIQUE   -- 'planchas', 'caja', 'rollos', 'unidades', 'pares'
+    nombre      VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE categoria_gasto (
+CREATE TABLE IF NOT EXISTS categoria_gasto (
     id          SERIAL PRIMARY KEY,
     nombre      VARCHAR(150) NOT NULL UNIQUE
 );
@@ -47,8 +43,7 @@ CREATE TABLE categoria_gasto (
 --  TABLAS TRANSACCIONALES
 -- ============================================================
 
--- ── Ventas ──────────────────────────────────────────────────
-CREATE TABLE venta (
+CREATE TABLE IF NOT EXISTS venta (
     id                  SERIAL PRIMARY KEY,
     fecha               DATE           NOT NULL,
     tipo_cliente_id     INT            NOT NULL REFERENCES tipo_cliente(id),
@@ -60,8 +55,7 @@ CREATE TABLE venta (
     created_at          TIMESTAMPTZ    DEFAULT NOW()
 );
 
--- ── Producción ──────────────────────────────────────────────
-CREATE TABLE produccion (
+CREATE TABLE IF NOT EXISTS produccion (
     id                      SERIAL PRIMARY KEY,
     fecha_produccion        DATE           NOT NULL,
     producto_id             INT            NOT NULL REFERENCES producto(id),
@@ -73,8 +67,7 @@ CREATE TABLE produccion (
     created_at              TIMESTAMPTZ    DEFAULT NOW()
 );
 
--- ── Inventario (compras de materiales) ──────────────────────
-CREATE TABLE inventario (
+CREATE TABLE IF NOT EXISTS inventario (
     id                  SERIAL PRIMARY KEY,
     fecha               DATE           NOT NULL,
     material            VARCHAR(150)   NOT NULL,
@@ -86,77 +79,59 @@ CREATE TABLE inventario (
     created_at          TIMESTAMPTZ    DEFAULT NOW()
 );
 
--- ── Gastos del mes ──────────────────────────────────────────
-CREATE TABLE gasto_mes (
+CREATE TABLE IF NOT EXISTS gasto_mes (
     id                  SERIAL PRIMARY KEY,
     categoria_id        INT            NOT NULL REFERENCES categoria_gasto(id),
     monto               NUMERIC(12,2)  NOT NULL CHECK (monto >= 0),
     detalle             TEXT,
-    periodo             DATE,          -- primer día del mes al que corresponde
+    periodo             DATE,
     created_at          TIMESTAMPTZ    DEFAULT NOW()
 );
 
 -- ============================================================
 --  ÍNDICES
 -- ============================================================
-CREATE INDEX idx_venta_fecha        ON venta(fecha);
-CREATE INDEX idx_venta_producto     ON venta(producto_id);
-CREATE INDEX idx_produccion_fecha   ON produccion(fecha_produccion);
-CREATE INDEX idx_inventario_fecha   ON inventario(fecha);
-CREATE INDEX idx_gasto_mes_periodo  ON gasto_mes(periodo);
+CREATE INDEX IF NOT EXISTS idx_venta_fecha        ON venta(fecha);
+CREATE INDEX IF NOT EXISTS idx_venta_producto     ON venta(producto_id);
+CREATE INDEX IF NOT EXISTS idx_produccion_fecha   ON produccion(fecha_produccion);
+CREATE INDEX IF NOT EXISTS idx_inventario_fecha   ON inventario(fecha);
+CREATE INDEX IF NOT EXISTS idx_gasto_mes_periodo  ON gasto_mes(periodo);
 
 -- ============================================================
 --  DATOS MAESTROS
 -- ============================================================
 
-INSERT INTO tipo_cliente (nombre) VALUES
-    ('Retail'),
-    ('Mayorista');
+INSERT INTO tipo_cliente (nombre) VALUES ('Retail'), ('Mayorista')
+ON CONFLICT (nombre) DO NOTHING;
 
-INSERT INTO tipo_venta (nombre) VALUES
-    ('Contado'),
-    ('Crédito');
+INSERT INTO tipo_venta (nombre) VALUES ('Contado'), ('Crédito')
+ON CONFLICT (nombre) DO NOTHING;
 
-INSERT INTO producto (nombre) VALUES
-    ('Ropero'),
-    ('Velador'),
-    ('Cómoda'),
-    ('Comodín');
+INSERT INTO producto (nombre) VALUES ('Ropero'), ('Velador'), ('Cómoda'), ('Comodín')
+ON CONFLICT (nombre) DO NOTHING;
 
 INSERT INTO destino_produccion (descripcion) VALUES
-    ('Stock + pedidos'),
-    ('Mayoristas'),
-    ('Stock'),
-    ('Retail'),
-    ('Pedidos finales');
+    ('Stock + pedidos'), ('Mayoristas'), ('Stock'), ('Retail'), ('Pedidos finales')
+ON CONFLICT (descripcion) DO NOTHING;
 
 INSERT INTO unidad_medida (nombre) VALUES
-    ('planchas'),
-    ('caja'),
-    ('rollos'),
-    ('unidades'),
-    ('pares');
+    ('planchas'), ('caja'), ('rollos'), ('unidades'), ('pares')
+ON CONFLICT (nombre) DO NOTHING;
 
 INSERT INTO categoria_gasto (nombre) VALUES
     ('Mano de Obra (eventual)'),
     ('Compra Melamina y accesorios'),
     ('Alquiler local + servicios'),
     ('Transporte y delivery'),
-    ('Otros (herramientas, etc.)');
+    ('Otros (herramientas, etc.)')
+ON CONFLICT (nombre) DO NOTHING;
 
 -- ============================================================
---  DATOS TRANSACCIONALES — VENTAS (hoja: venta)
+--  DATOS TRANSACCIONALES — VENTAS
 -- ============================================================
 
 INSERT INTO venta (fecha, tipo_cliente_id, producto_id, cantidad, precio_unitario, total_venta, tipo_venta_id)
-SELECT
-    v.fecha,
-    tc.id,
-    p.id,
-    v.cantidad,
-    v.precio_unitario,
-    v.total_venta,
-    tv.id
+SELECT v.fecha, tc.id, p.id, v.cantidad, v.precio_unitario, v.total_venta, tv.id
 FROM (VALUES
     ('2026-03-02'::date, 'Retail',    'Ropero',  2, 760, 1520, 'Contado'),
     ('2026-03-02'::date, 'Retail',    'Velador', 3,  90,  270, 'Contado'),
@@ -195,18 +170,11 @@ JOIN producto     p  ON p.nombre  = v.producto
 JOIN tipo_venta   tv ON tv.nombre = v.tipo_venta;
 
 -- ============================================================
---  DATOS TRANSACCIONALES — PRODUCCIÓN (hoja: producion mes)
+--  DATOS TRANSACCIONALES — PRODUCCIÓN
 -- ============================================================
 
 INSERT INTO produccion (fecha_produccion, producto_id, cantidad_producida, costo_materia_prima, mano_de_obra, costo_total, destino_id)
-SELECT
-    pr.fecha,
-    p.id,
-    pr.cantidad,
-    pr.costo_mp,
-    pr.mano_obra,
-    pr.costo_total,
-    d.id
+SELECT pr.fecha, p.id, pr.cantidad, pr.costo_mp, pr.mano_obra, pr.costo_total, d.id
 FROM (VALUES
     ('2026-03-02'::date, 'Ropero',  12, 5.76, 1.68, 7.44, 'Stock + pedidos'),
     ('2026-03-10'::date, 'Ropero',  15, 6.75, 2.10, 8.85, 'Mayoristas'),
@@ -219,102 +187,39 @@ JOIN producto            p ON p.nombre      = pr.producto
 JOIN destino_produccion  d ON d.descripcion = pr.destino;
 
 -- ============================================================
---  DATOS TRANSACCIONALES — INVENTARIO (hoja: inventario)
+--  DATOS TRANSACCIONALES — INVENTARIO
 -- ============================================================
 
 INSERT INTO inventario (fecha, material, cantidad, unidad_id, precio_unitario, total_compra, notas)
-SELECT
-    i.fecha,
-    i.material,
-    i.cantidad,
-    u.id,
-    i.precio_unit,
-    i.total_compra,
-    NULLIF(i.notas, '-')
+SELECT i.fecha, i.material, i.cantidad, u.id, i.precio_unit, i.total_compra, NULLIF(i.notas, '-')
 FROM (VALUES
-    ('2026-03-01'::date, 'Melamina Blanco 18mm',  8,  'planchas',  150.0, 1200, 'Compra inicial'),
-    ('2026-03-03'::date, 'Mapresa (fondo)',         5,  'planchas',  100.0,  500, '-'),
-    ('2026-03-05'::date, 'Tornillos (caja 1000)',   1,  'caja',       80.0,   80, '-'),
-    ('2026-03-07'::date, 'Melamina Color 18mm',     6,  'planchas',  180.0, 1080, '-'),
-    ('2026-03-10'::date, 'Tapacanto (rollo)',        3,  'rollos',     35.0,  105, '-'),
-    ('2026-03-12'::date, 'Jaladores',              150,  'unidades',    1.0,  150, '-'),
-    ('2026-03-14'::date, 'Correderas (30cm)',       40,  'pares',      20.0,  800, '-'),
-    ('2026-03-18'::date, 'Melamina Blanco 18mm',    7,  'planchas',  152.0, 1064, 'Compra adicional'),
-    ('2026-03-20'::date, 'Bisagras (caja 100)',      1,  'caja',       90.0,   90, '-'),
-    ('2026-03-23'::date, 'Mapresa',                  4,  'planchas',  100.0,  400, '-'),
-    ('2026-03-25'::date, 'Melamina Color 18mm',      5,  'planchas',  175.0,  875, 'Compra urgente'),
-    ('2026-03-28'::date, 'Patitas',                200,  'unidades',    0.4,   80, '-'),
-    ('2026-03-30'::date, 'Tornillos (caja)',          1,  'caja',       80.0,   80, 'Reposición')
+    ('2026-03-01'::date, 'Melamina Blanco 18mm',  8,   'planchas',  150.0, 1200, 'Compra inicial'),
+    ('2026-03-03'::date, 'Mapresa (fondo)',         5,   'planchas',  100.0,  500, '-'),
+    ('2026-03-05'::date, 'Tornillos (caja 1000)',   1,   'caja',       80.0,   80, '-'),
+    ('2026-03-07'::date, 'Melamina Color 18mm',     6,   'planchas',  180.0, 1080, '-'),
+    ('2026-03-10'::date, 'Tapacanto (rollo)',        3,   'rollos',     35.0,  105, '-'),
+    ('2026-03-12'::date, 'Jaladores',              150,   'unidades',    1.0,  150, '-'),
+    ('2026-03-14'::date, 'Correderas (30cm)',       40,   'pares',      20.0,  800, '-'),
+    ('2026-03-18'::date, 'Melamina Blanco 18mm',    7,   'planchas',  152.0, 1064, 'Compra adicional'),
+    ('2026-03-20'::date, 'Bisagras (caja 100)',      1,   'caja',       90.0,   90, '-'),
+    ('2026-03-23'::date, 'Mapresa',                  4,   'planchas',  100.0,  400, '-'),
+    ('2026-03-25'::date, 'Melamina Color 18mm',      5,   'planchas',  175.0,  875, 'Compra urgente'),
+    ('2026-03-28'::date, 'Patitas',                200,   'unidades',    0.4,   80, '-'),
+    ('2026-03-30'::date, 'Tornillos (caja)',          1,   'caja',       80.0,   80, 'Reposición')
 ) AS i(fecha, material, cantidad, unidad, precio_unit, total_compra, notas)
 JOIN unidad_medida u ON u.nombre = i.unidad;
 
 -- ============================================================
---  DATOS TRANSACCIONALES — GASTOS (hoja: gastos mes)
+--  DATOS TRANSACCIONALES — GASTOS
 -- ============================================================
 
 INSERT INTO gasto_mes (categoria_id, monto, detalle, periodo)
-SELECT
-    cg.id,
-    g.monto,
-    NULLIF(g.detalle, ''),
-    '2026-03-01'::date
+SELECT cg.id, g.monto, NULLIF(g.detalle, ''), '2026-03-01'::date
 FROM (VALUES
-    ('Mano de Obra (eventual)',          6800,  '3 trabajadores'),
-    ('Compra Melamina y accesorios',    12740,  'Principal gasto variable'),
-    ('Alquiler local + servicios',       2800,  'Fijo'),
-    ('Transporte y delivery',             980,  NULL),
-    ('Otros (herramientas, etc.)',         650,  NULL)
+    ('Mano de Obra (eventual)',          6800, '3 trabajadores'),
+    ('Compra Melamina y accesorios',    12740, 'Principal gasto variable'),
+    ('Alquiler local + servicios',       2800, 'Fijo'),
+    ('Transporte y delivery',             980, ''),
+    ('Otros (herramientas, etc.)',         650, '')
 ) AS g(categoria, monto, detalle)
 JOIN categoria_gasto cg ON cg.nombre = g.categoria;
-
--- ============================================================
---  VISTAS ANALÍTICAS DE UTILIDAD
--- ============================================================
-
--- Resumen de ventas por producto y tipo de cliente
-CREATE OR REPLACE VIEW v_ventas_resumen AS
-SELECT
-    p.nombre                     AS producto,
-    tc.nombre                    AS tipo_cliente,
-    tv.nombre                    AS tipo_venta,
-    COUNT(*)                     AS num_transacciones,
-    SUM(v.cantidad)              AS unidades_vendidas,
-    SUM(v.total_venta)           AS total_ingresos
-FROM venta v
-JOIN producto     p  ON p.id  = v.producto_id
-JOIN tipo_cliente tc ON tc.id = v.tipo_cliente_id
-JOIN tipo_venta   tv ON tv.id = v.tipo_venta_id
-GROUP BY p.nombre, tc.nombre, tv.nombre;
-
--- Costo unitario vs precio de venta por producto
-CREATE OR REPLACE VIEW v_margen_producto AS
-SELECT
-    p.nombre                                    AS producto,
-    ROUND(AVG(pr.costo_total), 2)               AS costo_unitario_promedio,
-    ROUND(AVG(v.precio_unitario), 2)            AS precio_venta_promedio,
-    ROUND(AVG(v.precio_unitario)
-          - AVG(pr.costo_total), 2)             AS margen_bruto_unitario
-FROM producto p
-LEFT JOIN produccion pr ON pr.producto_id = p.id
-LEFT JOIN venta       v  ON v.producto_id  = p.id
-GROUP BY p.nombre;
-
--- Compras de inventario por material
-CREATE OR REPLACE VIEW v_inventario_resumen AS
-SELECT
-    material,
-    u.nombre                     AS unidad,
-    SUM(i.cantidad)              AS cantidad_total,
-    SUM(i.total_compra)          AS gasto_total
-FROM inventario i
-JOIN unidad_medida u ON u.id = i.unidad_id
-GROUP BY material, u.nombre
-ORDER BY gasto_total DESC;
-
--- ============================================================
---  VERIFICACIÓN RÁPIDA
--- ============================================================
--- SELECT 'ventas'     AS tabla, COUNT(*) FROM venta       UNION ALL
--- SELECT 'produccion',          COUNT(*) FROM produccion  UNION ALL
--- SELECT 'inventario',          COUNT(*) FROM inventario  UNION ALL
--- SELECT 'gastos',              COUNT(*) FROM gasto_mes;

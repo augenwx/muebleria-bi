@@ -1,0 +1,28 @@
+
+name: muebleria-bi-dw
+
+services:
+  muebleria-dw-pg:
+    image: postgres:16-alpine
+    container_name: muebleria-dw-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: muebleria_dw
+      TZ: America/Lima
+    ports:
+      - "5434:5432" 
+    volumes:
+      - postgres_muebleria_dw_data:/var/lib/postgresql/data 
+      - ./init_dw:/docker-entrypoint-initdb.d 
+    networks:
+      - muebleria-bi-net
+
+volumes:
+  postgres_muebleria_dw_data:
+
+networks:
+  muebleria-bi-net:
+    driver: bridge
+    name: muebleria-bi-net
