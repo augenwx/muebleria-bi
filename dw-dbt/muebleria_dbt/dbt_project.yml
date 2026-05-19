@@ -1,0 +1,35 @@
+
+# ============================================================
+#  MUEBLERÍA — Proyecto dbt  (Data Warehouse)
+# ============================================================
+
+name: 'muebleria_dbt'
+version: '1.0.0'
+
+profile: 'muebleria_dbt'
+
+# Paths
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# ============================================================
+#  Materialización y schemas
+# ============================================================
+models:
+  muebleria_dbt:
+
+    staging:
+      +materialized: view
+      +schema: staging
+
+    marts:
+      +materialized: table
+      +schema: marts

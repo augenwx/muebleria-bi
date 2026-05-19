@@ -1,0 +1,168 @@
+version: 2
+
+models:
+  # ════════════════════════════════════════
+  #  DIMENSIONES
+  # ════════════════════════════════════════
+
+  - name: dim_tiempo
+    description: "Dimensión de tiempo - 1 fila por fecha única"
+    columns:
+      - name: fecha_key
+        description: "Surrogate key YYYYMMDD"
+        tests: [unique, not_null]
+      - name: fecha
+        tests: [unique, not_null]
+
+  - name: dim_cliente
+    description: "Dimensión de clientes con tipo (Retail/Mayorista)"
+    columns:
+      - name: cliente_id
+        tests: [unique, not_null]
+
+  - name: dim_producto
+    description: "Dimensión de productos con precios y márgenes"
+    columns:
+      - name: producto_id
+        tests: [unique, not_null]
+
+  - name: dim_tipo_venta
+    description: "Tipo de venta: Contado / Crédito"
+    columns:
+      - name: tipo_venta_id
+        tests: [unique, not_null]
+
+  - name: dim_usuario
+    description: "Usuarios del sistema"
+    columns:
+      - name: usuario_id
+        tests: [unique, not_null]
+
+  - name: dim_destino_prod
+    description: "Destino de producción (Stock, Mayoristas, etc.)"
+    columns:
+      - name: destino_id
+        tests: [unique, not_null]
+
+  - name: dim_material
+    description: "Materias primas con unidad de medida"
+    columns:
+      - name: material_id
+        tests: [unique, not_null]
+
+  - name: dim_proveedor
+    description: "Proveedores"
+    columns:
+      - name: proveedor_id
+        tests: [unique, not_null]
+
+  - name: dim_categoria_gasto
+    description: "Categorías de gasto (fijo/variable)"
+    columns:
+      - name: categoria_id
+        tests: [unique, not_null]
+      - name: tipo_gasto
+        tests:
+          - accepted_values:
+              values: ['fijo', 'variable']
+
+  # ════════════════════════════════════════
+  #  HECHOS
+  # ════════════════════════════════════════
+
+  - name: fact_ventas
+    description: "Ventas: 1 fila por línea de detalle_venta"
+    columns:
+      - name: detalle_venta_id
+        tests: [unique, not_null]
+      - name: tiempo_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tiempo')
+              field: fecha_key
+      - name: cliente_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cliente')
+              field: cliente_id
+      - name: producto_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_producto')
+              field: producto_id
+      - name: tipo_venta_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tipo_venta')
+              field: tipo_venta_id
+
+  - name: fact_produccion
+    description: "Producción: 1 fila por lote (sin fan-out)"
+    columns:
+      - name: produccion_id
+        tests: [unique, not_null]
+      - name: tiempo_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tiempo')
+              field: fecha_key
+      - name: producto_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_producto')
+              field: producto_id
+      - name: destino_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_destino_prod')
+              field: destino_id
+
+  - name: fact_inventario
+    description: "Inventario (Kardex): 1 fila por movimiento de material"
+    columns:
+      - name: movimiento_id
+        tests: [unique, not_null]
+      - name: tiempo_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tiempo')
+              field: fecha_key
+      - name: material_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_material')
+              field: material_id
+      - name: tipo_movimiento
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['entrada', 'salida', 'ajuste']
+
+  - name: fact_gastos
+    description: "Gastos operativos: 1 fila por gasto"
+    columns:
+      - name: gasto_id
+        tests: [unique, not_null]
+      - name: tiempo_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tiempo')
+              field: fecha_key
+      - name: categoria_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_categoria_gasto')
+              field: categoria_id
+      - name: monto
+        tests: [not_null]

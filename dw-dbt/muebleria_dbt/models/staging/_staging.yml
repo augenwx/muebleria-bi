@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  # ── Ventas ──
+  - name: stg_ventas
+    description: "Cabecera de ventas limpia"
+    columns:
+      - name: venta_id
+        tests: [unique, not_null]
+
+  - name: stg_detalle_venta
+    description: "Líneas de venta (1 por producto vendido)"
+    columns:
+      - name: detalle_venta_id
+        tests: [unique, not_null]
+      - name: venta_id
+        tests: [not_null]
+      - name: producto_id
+        tests: [not_null]
+
+  # ── Producción ──
+  - name: stg_produccion
+    description: "Lotes de producción con costos totales (sin fan-out)"
+    columns:
+      - name: produccion_id
+        tests: [unique, not_null]
+
+  - name: stg_orden_produccion
+    description: "Órdenes de producción"
+    columns:
+      - name: orden_produccion_id
+        tests: [unique, not_null]
+
+  # ── Inventario ──
+  - name: stg_movimiento_material
+    description: "Kardex de movimientos de materiales"
+    columns:
+      - name: movimiento_id
+        tests: [unique, not_null]
+      - name: tipo_movimiento
+        tests:
+          - accepted_values:
+              values: ['entrada', 'salida', 'ajuste']
+
+  - name: stg_compra_material
+    description: "Compras de materiales a proveedores"
+    columns:
+      - name: compra_id
+        tests: [unique, not_null]
+
+  # ── Gastos ──
+  - name: stg_gasto
+    description: "Gastos operativos"
+    columns:
+      - name: gasto_id
+        tests: [unique, not_null]
+
+  # ── Maestros ──
+  - name: stg_cliente
+    description: "Maestro de clientes"
+    columns:
+      - name: cliente_id
+        tests: [unique, not_null]
+
+  - name: stg_producto
+    description: "Maestro de productos"
+    columns:
+      - name: producto_id
+        tests: [unique, not_null]
+
+  - name: stg_usuario
+    description: "Usuarios del sistema"
+    columns:
+      - name: usuario_id
+        tests: [unique, not_null]
+
+  - name: stg_material
+    description: "Maestro de materiales"
+    columns:
+      - name: material_id
+        tests: [unique, not_null]
+
+  - name: stg_proveedor
+    description: "Maestro de proveedores"
+    columns:
+      - name: proveedor_id
+        tests: [unique, not_null]

@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Tablas OLTP replicadas por Airbyte desde muebleria_db.transaccional"
+    database: muebleria_dw
+    schema: raw
+
+    tables:
+      # ── Ventas ──
+      - name: venta
+        description: "Cabecera de ventas (1 fila por venta)"
+      - name: detalle_venta
+        description: "Líneas de venta (N filas por venta, 1 por producto)"
+      - name: tipo_venta
+        description: "Catálogo: Contado / Crédito"
+
+      # ── Clientes ──
+      - name: cliente
+        description: "Maestro de clientes"
+      - name: tipo_cliente
+        description: "Catálogo: Retail / Mayorista"
+
+      # ── Productos ──
+      - name: producto
+        description: "Maestro de productos terminados con precios y costo estándar"
+
+      # ── Producción ──
+      - name: produccion
+        description: "Lotes de producción con costos totales (MP + MO)"
+      - name: orden_produccion
+        description: "Órdenes de producción (planificación)"
+      - name: destino_produccion
+        description: "Catálogo: destino del lote (Stock, Mayoristas, etc.)"
+      - name: consumo_material
+        description: "Detalle de materiales consumidos por lote (NO se usa en FACT_PRODUCCION para evitar fan-out)"
+
+      # ── Materiales e Inventario ──
+      - name: material
+        description: "Maestro de materias primas"
+      - name: unidad_medida
+        description: "Catálogo: unidades de medida (planchas, kg, litros, etc.)"
+      - name: compra_material
+        description: "Compras de materiales a proveedores"
+      - name: movimiento_material
+        description: "Kardex: entradas, salidas y ajustes de materiales"
+
+      # ── Proveedores ──
+      - name: proveedor
+        description: "Maestro de proveedores"
+
+      # ── Gastos ──
+      - name: gasto
+        description: "Gastos operativos (alquiler, luz, MO eventual, etc.)"
+      - name: categoria_gasto
+        description: "Catálogo: categorías de gasto (fijo/variable)"
+
+      # ── Usuarios ──
+      - name: usuario
+        description: "Usuarios del sistema (vendedor, admin, producción, contador)"

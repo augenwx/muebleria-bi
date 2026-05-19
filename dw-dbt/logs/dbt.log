@@ -1,0 +1,88 @@
+[0m20:15:36.334293 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF156FBFE0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF14F446B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF118B67E0>]}
+
+
+============================== 20:15:36.357493 | 210e9588-8cf2-439e-8b7d-5fdf367cf818 ==============================
+[0m20:15:36.357493 [info ] [MainThread]: Running with dbt=1.11.9
+[0m20:15:36.358226 [debug] [MainThread]: running dbt with arguments {'profiles_dir': 'C:\\Users\\Usuario\\.dbt', 'target_path': 'None', 'printer_width': '80', 'no_print': 'None', 'invocation_command': 'dbt init', 'warn_error': 'None', 'static_parser': 'True', 'partial_parse': 'True', 'indirect_selection': 'eager', 'send_anonymous_usage_stats': 'True', 'log_path': 'logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False', 'use_experimental_parser': 'False', 'version_check': 'True', 'quiet': 'False', 'introspect': 'True', 'empty': 'None', 'log_cache_events': 'False', 'debug': 'False', 'log_format': 'default', 'use_colors': 'True', 'cache_selected_only': 'False', 'write_json': 'True'}
+[0m20:15:36.381024 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\Usuario\.dbt
+[0m20:15:58.571357 [debug] [MainThread]: Starter project path: C:\Users\Usuario\AppData\Roaming\Python\Python312\site-packages\dbt\include\starter_project
+[0m20:15:58.637621 [info ] [MainThread]: 
+Your new dbt project "muebleria_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m20:15:58.638618 [info ] [MainThread]: Setting up your profile.
+[0m20:20:49.159996 [info ] [MainThread]: Profile muebleria_dbt written to C:\Users\Usuario\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m20:20:49.163669 [debug] [MainThread]: Command `dbt init` succeeded at 20:20:49.162653 after 312.97 seconds
+[0m20:20:49.163669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF150A8740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF14D9BC80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EF1402A180>]}
+[0m20:20:49.165181 [debug] [MainThread]: Flushing usage events
+[0m20:20:50.468688 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:23:55.815528 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B16A01340>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B16A02C30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B16E28AD0>]}
+
+
+============================== 20:23:55.822250 | c547802a-0be9-480e-a2c8-22ed9b5a88e3 ==============================
+[0m20:23:55.822250 [info ] [MainThread]: Running with dbt=1.11.9
+[0m20:23:55.823240 [debug] [MainThread]: running dbt with arguments {'no_print': 'None', 'profiles_dir': 'C:\\Users\\Usuario\\.dbt', 'target_path': 'None', 'cache_selected_only': 'False', 'use_colors': 'True', 'warn_error': 'None', 'indirect_selection': 'eager', 'fail_fast': 'False', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_path': 'logs', 'use_experimental_parser': 'False', 'version_check': 'True', 'introspect': 'True', 'quiet': 'False', 'empty': 'None', 'log_cache_events': 'False', 'debug': 'False', 'log_format': 'default', 'invocation_command': 'dbt debug', 'printer_width': '80', 'write_json': 'True'}
+[0m20:23:55.837773 [info ] [MainThread]: dbt version: 1.11.9
+[0m20:23:55.837773 [info ] [MainThread]: python version: 3.12.6
+[0m20:23:55.839321 [info ] [MainThread]: python path: C:\Python312\python.exe
+[0m20:23:55.839321 [info ] [MainThread]: os info: Windows-11-10.0.22631-SP0
+[0m20:23:55.879401 [info ] [MainThread]: Using profiles dir at C:\Users\Usuario\.dbt
+[0m20:23:55.879520 [info ] [MainThread]: Using profiles.yml file at C:\Users\Usuario\.dbt\profiles.yml
+[0m20:23:55.880408 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\Usuario\Documents\muebleria-bi\dw-dbt\dbt_project.yml
+[0m20:23:55.881414 [info ] [MainThread]: adapter type: postgres
+[0m20:23:55.882450 [info ] [MainThread]: adapter version: 1.10.0
+[0m20:23:55.882450 [info ] [MainThread]: Configuration:
+[0m20:23:55.883548 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m20:23:55.884140 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m20:23:55.884140 [info ] [MainThread]: Required dependencies:
+[0m20:23:55.885148 [debug] [MainThread]: Executing "git --help"
+[0m20:23:55.936531 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m20:23:55.937421 [debug] [MainThread]: STDERR: "b''"
+[0m20:23:55.937421 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m20:23:55.938031 [info ] [MainThread]: Connection:
+[0m20:23:55.938031 [info ] [MainThread]:   host: localhost
+[0m20:23:55.938031 [info ] [MainThread]:   port: 5434
+[0m20:23:55.939648 [info ] [MainThread]:   user: admin
+[0m20:23:55.939648 [info ] [MainThread]:   database: muebleria_dw
+[0m20:23:55.940624 [info ] [MainThread]:   schema: staging
+[0m20:23:55.941607 [info ] [MainThread]:   connect_timeout: 10
+[0m20:23:55.941607 [info ] [MainThread]:   role: None
+[0m20:23:55.941607 [info ] [MainThread]:   search_path: None
+[0m20:23:55.942697 [info ] [MainThread]:   keepalives_idle: 0
+[0m20:23:55.942697 [info ] [MainThread]:   sslmode: None
+[0m20:23:55.943704 [info ] [MainThread]:   sslcert: None
+[0m20:23:55.944392 [info ] [MainThread]:   sslkey: None
+[0m20:23:55.944392 [info ] [MainThread]:   sslrootcert: None
+[0m20:23:55.944392 [info ] [MainThread]:   application_name: dbt
+[0m20:23:55.945603 [info ] [MainThread]:   retries: 1
+[0m20:23:55.946701 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m20:23:56.071595 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m20:24:00.020285 [debug] [MainThread]: Using postgres connection "debug"
+[0m20:24:00.021299 [debug] [MainThread]: On debug: select 1 as id
+[0m20:24:00.022318 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m20:24:00.055094 [debug] [MainThread]: SQL status: SELECT 1 in 0.033 seconds
+[0m20:24:00.056100 [debug] [MainThread]: On debug: Close
+[0m20:24:00.056100 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m20:24:00.056999 [info ] [MainThread]: [31m1 check failed:[0m
+[0m20:24:00.058009 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\Usuario\Documents\muebleria-bi\dw-dbt\dbt_project.yml> not found
+
+[0m20:24:00.058009 [debug] [MainThread]: Command `dbt debug` failed at 20:24:00.058009 after 4.38 seconds
+[0m20:24:00.059671 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m20:24:00.059671 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B15DCD760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B17FDCFE0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024B18013B00>]}
+[0m20:24:00.060633 [debug] [MainThread]: Flushing usage events
+[0m20:24:00.612906 [debug] [MainThread]: An error was encountered while trying to flush usage events

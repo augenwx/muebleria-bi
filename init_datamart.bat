@@ -20,6 +20,6 @@ docker exec -it %CONTAINER% psql -U %USER% -d %DB% -v ON_ERROR_STOP=1 -f /script
 
 echo.
 echo === DataMart listo. Verificacion rapida ===
-docker exec -it %CONTAINER% psql -U %USER% -d %DB% -c "SET search_path TO estrella, transaccional, public; SELECT 'HVENTAS' AS tabla, COUNT(*) AS filas FROM HVENTAS UNION ALL SELECT 'HPRODUCCION', COUNT(*) FROM HPRODUCCION UNION ALL SELECT 'HCOMPRAS_MATERIAL', COUNT(*) FROM HCOMPRAS_MATERIAL UNION ALL SELECT 'HGASTOS_MES', COUNT(*) FROM HGASTOS_MES;"
+docker exec -it %CONTAINER% psql -U %USER% -d %DB% -c "SET search_path TO estrella, transaccional, public; SELECT 'HVENTAS' AS tabla, COUNT(*) AS filas FROM HVENTAS UNION ALL SELECT 'HPRODUCCION', COUNT(*) FROM HPRODUCCION UNION ALL SELECT 'HCOMPRAS_MATERIAL', COUNT(*) FROM HCOMPRAS_MATERIAL UNION ALL SELECT 'HGASTOS', COUNT(*) FROM HGASTOS;"
 
 pause
