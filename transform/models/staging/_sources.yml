@@ -1,0 +1,63 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: "Capa raw replicada por Airbyte desde el OLTP transaccional"
+    tables:
+      - name: venta
+        description: "Tabla de ventas transaccional"
+        columns:
+          - name: id
+            description: "PK de la venta"
+          - name: fecha
+            description: "Fecha de la venta"
+          - name: cliente_id
+            description: "FK hacia cliente"
+          - name: tipo_cliente_id
+            description: "FK hacia tipo_cliente"
+          - name: producto_id
+            description: "FK hacia producto"
+          - name: cantidad
+          - name: precio_unitario
+          - name: total_venta
+          - name: tipo_venta_id
+            description: "FK hacia tipo_venta"
+
+      - name: cliente
+        description: "Maestra de clientes"
+        columns:
+          - name: id
+          - name: tipo_cliente_id
+          - name: documento
+          - name: nombre
+          - name: direccion
+          - name: telefono
+          - name: email
+
+      - name: producto
+        description: "Maestra de productos"
+        columns:
+          - name: id
+          - name: nombre
+
+      - name: tipo_cliente
+        description: "Catálogo de tipos de cliente (Retail, Mayorista)"
+
+      - name: tipo_venta
+        description: "Catálogo de tipos de venta (Contado, Crédito)"
+
+      - name: produccion
+        description: "Registro de producción diaria"
+
+      - name: material
+        description: "Maestra de materiales"
+
+      - name: compra_material
+        description: "Compras / ingresos de inventario"
+
+      - name: gasto
+        description: "Gastos operativos mensualizados"
+
+      - name: categoria_gasto
+        description: "Catálogo de categorías de gasto"

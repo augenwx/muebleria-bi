@@ -1,0 +1,111 @@
+version: 2
+
+models:
+  - name: dim_fecha
+    description: "Dimensión calendario — granularidad diaria, año 2026"
+    columns:
+      - name: idfecha
+        description: "PK en formato YYYYMMDD"
+        tests:
+          - unique
+          - not_null
+      - name: fecha
+        tests:
+          - unique
+          - not_null
+      - name: anio
+        tests:
+          - not_null
+      - name: mes
+        tests:
+          - not_null
+      - name: es_pico
+        tests:
+          - not_null
+
+  - name: dim_cliente
+    description: "Dimensión cliente — granularidad por cliente individual"
+    columns:
+      - name: idcliente
+        description: "PK surrogada SERIAL"
+        tests:
+          - unique
+          - not_null
+      - name: cdcliente
+        description: "Business key: CLI_ + id del OLTP"
+        tests:
+          - unique
+          - not_null
+      - name: documento
+        tests:
+          - unique
+      - name: tipocliente
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Retail
+                - Mayorista
+
+  - name: dim_producto
+    description: "Dimensión producto"
+    columns:
+      - name: idproducto
+        tests:
+          - unique
+          - not_null
+      - name: cdproducto
+        tests:
+          - unique
+          - not_null
+      - name: dsproducto
+        tests:
+          - not_null
+
+  - name: fact_ventas
+    description: "Tabla de hechos — ventas con granularidad por línea de venta"
+    columns:
+      - name: idfecha
+        description: "FK hacia dim_fecha"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_fecha')
+              field: idfecha
+      - name: idproducto
+        description: "FK hacia dim_producto"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_producto')
+              field: idproducto
+      - name: idcliente
+        description: "FK hacia dim_cliente"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cliente')
+              field: idcliente
+      - name: cantidad
+        tests:
+          - not_null
+      - name: preciounitvta
+        tests:
+          - not_null
+      - name: importetotal
+        tests:
+          - not_null
+      - name: tipoventa
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Contado
+                - Crédito
+      - name: costomattotal
+        tests:
+          - not_null
+      - name: costomototal
+      - name: margencontrib
+        tests:
+          - not_null

@@ -1,4 +1,10 @@
+name: muebleria-bi
+
 services:
+  # ============================================================
+  # OLTP - Base de datos transaccional (ventas, producción)
+  # Expone en puerto 5433 para Airbyte y consultas directas
+  # ============================================================
   db_muebleria:
     image: postgres:15
     container_name: postgres_bi
@@ -7,10 +13,54 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password123
       POSTGRES_DB: muebleria_db
+      TZ: America/Lima
     ports:
       - "5433:5432"
     volumes:
-      # Datos persistentes: si borras el contenedor, la BD no se pierde
-      - ./postgres_data:/var/lib/postgresql/data
-
+      - postgres_oltp_data:/var/lib/postgresql/data
       - ./OLTP-Postgre:/scripts
+    networks:
+      - muebleria-bi-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d muebleria_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # DW - Data Warehouse analítico (modelo estrella)
+  # Expone en puerto 5434 para Airbyte y consultas BI
+  # ============================================================
+  muebleria-dw-pg:
+    image: postgres:16-alpine
+    container_name: muebleria-dw-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: muebleria_dw
+      TZ: America/Lima
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_dw_data:/var/lib/postgresql/data
+      - ./dw-pg/init_dw:/docker-entrypoint-initdb.d
+    networks:
+      - muebleria-bi-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d muebleria_dw"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      db_muebleria:
+        condition: service_started
+
+volumes:
+  postgres_oltp_data:
+  postgres_dw_data:
+
+networks:
+  muebleria-bi-net:
+    driver: bridge
+    name: muebleria-bi-net

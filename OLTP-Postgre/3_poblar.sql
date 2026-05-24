@@ -66,16 +66,29 @@ LEFT JOIN precios pr ON pr.producto = t.nombre
 ON CONFLICT (CDPRODUCTO) DO NOTHING;
 
 -- DCLIENTE
-INSERT INTO DCLIENTE (CDCLIENTE, TIPOCLIENTE, CANAL, FRECUENCIA)
-SELECT DISTINCT
-    UPPER(REPLACE(tc.nombre, ' ', '_')) AS CDCLIENTE,
-    tc.nombre                           AS TIPOCLIENTE,
+INSERT INTO DCLIENTE (
+    CDCLIENTE, NOMBRE, DOCUMENTO, TIPOCLIENTE, CANAL,
+    DIRECCION, TELEFONO, EMAIL,
+    LIMITE_CREDITO, SALDO_PENDIENTE, ESTADO, FRECUENCIA
+)
+SELECT
+    'CLI_' || c.id                       AS CDCLIENTE,
+    c.nombre                             AS NOMBRE,
+    c.documento                          AS DOCUMENTO,
+    tc.nombre                            AS TIPOCLIENTE,
     CASE tc.nombre
         WHEN 'Retail'     THEN 'Tienda directa'
         WHEN 'Mayorista'  THEN 'Pedido especial'
-    END                                 AS CANAL,
-    NULL::VARCHAR                       AS FRECUENCIA   -- se completará con historial multi-mes
-FROM tipo_cliente tc
+    END                                  AS CANAL,
+    c.direccion                          AS DIRECCION,
+    c.telefono                           AS TELEFONO,
+    c.email                              AS EMAIL,
+    c.limite_credito                     AS LIMITE_CREDITO,
+    c.saldo_pendiente                    AS SALDO_PENDIENTE,
+    c.estado                             AS ESTADO,
+    NULL::VARCHAR                        AS FRECUENCIA
+FROM cliente c
+JOIN tipo_cliente tc ON tc.id = c.tipo_cliente_id
 ON CONFLICT (CDCLIENTE) DO NOTHING;
 
 -- DMATERIAL

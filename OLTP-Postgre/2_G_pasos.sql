@@ -47,10 +47,9 @@ SELECT
     dt.ES_PICO                                       AS ES_TEMPORADA
 FROM venta v
 JOIN producto      p   ON p.id  = v.producto_id
-JOIN tipo_cliente  tc  ON tc.id = v.tipo_cliente_id
 JOIN tipo_venta    tv  ON tv.id = v.tipo_venta_id
 JOIN DPRODUCTO     dp  ON dp.DSPRODUCTO  = p.nombre
-JOIN DCLIENTE      dc  ON dc.TIPOCLIENTE = tc.nombre
+JOIN DCLIENTE      dc  ON dc.CDCLIENTE   = 'CLI_' || v.cliente_id
 JOIN DTIEMPO       dt  ON dt.IDFECHA = CAST(TO_CHAR(v.fecha, 'YYYYMMDD') AS INT)
 CROSS JOIN costo_almacen_unit ca;
 
