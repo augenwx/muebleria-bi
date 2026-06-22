@@ -10,8 +10,8 @@ services:
     container_name: postgres_bi
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
       POSTGRES_DB: muebleria_db
       TZ: America/Lima
     ports:
