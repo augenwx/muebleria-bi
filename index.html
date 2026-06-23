@@ -1,0 +1,790 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentacion tecnica del proyecto End-to-End de Business Intelligence para Muebleria.">
+      
+      
+        <meta name="author" content="Grimaldo Arredondo Martinez y Jose Miguel Condo Huamani">
+      
+      
+      
+      
+        <link rel="next" href="arquitectura/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Muebleria BI</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#solucion-end-to-end-de-bi-para-la-optimizacion-de-ventas-produccion-y-costos-en-muebleria" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="." title="Muebleria BI" class="md-header__button md-logo" aria-label="Muebleria BI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Muebleria BI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Inicio y Resumen
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio y Resumen
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="arquitectura/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Arquitectura e Ingesta
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="data_warehouse/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Modelo Estrella y dbt
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="dashboard/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Metricas DAX y Visualizacion
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="validacion/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Calidad y Control de Datos
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Muebleria BI" class="md-nav__button md-logo" aria-label="Muebleria BI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Muebleria BI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Inicio y Resumen
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inicio y Resumen
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-datos-generales-del-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Datos Generales del Proyecto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-resumen-ejecutivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Resumen Ejecutivo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-problema-de-negocio-y-objetivo-analitico" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Problema de Negocio y Objetivo Analitico
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Problema de Negocio y Objetivo Analitico">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-problema-de-negocio-heredado-de-u1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Problema de negocio heredado de U1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-objetivo-analitico" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Objetivo analitico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-matriz-de-preguntas-de-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Matriz de preguntas de negocio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-kpis-base-del-periodo-validado" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 KPIs base del periodo validado
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="arquitectura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Arquitectura e Ingesta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data_warehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Estrella y dbt
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metricas DAX y Visualizacion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="validacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Calidad y Control de Datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="solucion-end-to-end-de-bi-para-la-optimizacion-de-ventas-produccion-y-costos-en-muebleria">Solucion End-to-End de BI para la Optimizacion de Ventas, Produccion y Costos en Muebleria</h1>
+<h2 id="1-datos-generales-del-proyecto">1. Datos Generales del Proyecto</h2>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nombre del proyecto BI</td>
+<td>Solucion End-to-End de BI para la Optimizacion de Ventas, Produccion y Costos en Muebleria</td>
+</tr>
+<tr>
+<td>Autores</td>
+<td>Grimaldo Arredondo Martinez y Jose Miguel Condo Huamani</td>
+</tr>
+<tr>
+<td>Universidad</td>
+<td>Universidad Peruana Union</td>
+</tr>
+<tr>
+<td>Ciclo</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Proceso de negocio analizado</td>
+<td>Ventas, produccion, inventario de materiales, costos operativos y rentabilidad comercial</td>
+</tr>
+<tr>
+<td>Fuente transaccional usada</td>
+<td>PostgreSQL OLTP <code>muebleria_db</code>, puerto <code>5433</code>, esquema <code>transaccional</code></td>
+</tr>
+<tr>
+<td>Data Warehouse / DataMart</td>
+<td>PostgreSQL DW <code>muebleria_dw</code>, puerto <code>5434</code>, esquemas <code>raw</code>, <code>staging</code> y <code>marts</code></td>
+</tr>
+<tr>
+<td>Transformacion</td>
+<td>dbt, modelos en <code>transform/models/staging</code> y <code>transform/models/marts</code></td>
+</tr>
+<tr>
+<td>Modelo semantico y dashboard</td>
+<td>Power BI, archivo <code>Powerbi/S4 Muebleria v1.pbix</code></td>
+</tr>
+<tr>
+<td>Rama de GitHub</td>
+<td>Rama de trabajo del proyecto en el repositorio de entrega</td>
+</tr>
+<tr>
+<td>Sitio MkDocs</td>
+<td>Carpeta <code>docs/</code> generada en este repositorio</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-resumen-ejecutivo">2. Resumen Ejecutivo</h2>
+<p>El proyecto aborda una empresa de fabricacion y venta de muebles de melamina con productos como roperos, comodas, veladores y comodines. El negocio opera con un modelo mixto de produccion para stock y pedidos especiales, pero arrastra una gestion manual basada en Excel y cuadernos. Esto limita la visibilidad sobre ventas, costos, rentabilidad por producto, compras de melamina y uso real de materiales.</p>
+<p>El problema critico identificado es la falta de control analitico sobre la rentabilidad real del ropero, considerado producto estrella. La empresa no solo necesita conocer cuanto vende, sino cuanto margen deja despues de considerar materia prima, mano de obra, stock ocioso, desperdicio de melamina y costos variables. Tambien existe una preocupacion operativa por compras de melamina y accesorios que no siempre se alinean con la demanda real, generando capital inmovilizado y posibles recortes sin transformacion en productos complementarios.</p>
+<p>La solucion BI implementa una arquitectura de punta a punta: una base transaccional PostgreSQL, una capa raw en un Data Warehouse separado, transformaciones dbt para staging y marts, un modelo estrella orientado a ventas y un dashboard Power BI para analizar KPIs comerciales y de rentabilidad. Con el dataset deterministico de marzo 2026 usado en <code>data.xlsx</code> y en el script transaccional, se validan 31 transacciones, 109 unidades vendidas y S/ 40,730.00 de ventas totales.</p>
+<p>El hallazgo comercial principal es que el ropero concentra S/ 29,130.00, equivalente al 71.52% de las ventas del periodo, con 39 unidades vendidas. La recomendacion es priorizar el control de costos y abastecimiento de melamina para roperos, monitorear mayoristas por su volumen de compra y mantener validaciones cruzadas entre SQL y Power BI para que las decisiones se basen en cifras reconciliadas.</p>
+<h2 id="3-problema-de-negocio-y-objetivo-analitico">3. Problema de Negocio y Objetivo Analitico</h2>
+<h3 id="31-problema-de-negocio-heredado-de-u1">3.1 Problema de negocio heredado de U1</h3>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Area o proceso involucrado</td>
+<td>Gestion Comercial, Produccion, Almacen y Finanzas</td>
+</tr>
+<tr>
+<td>Problema identificado</td>
+<td>Gestion manual de ventas, stock, costos de produccion, compras de melamina y rentabilidad por producto</td>
+</tr>
+<tr>
+<td>Usuarios principales</td>
+<td>Gerente General, Jefe de Taller, Encargado de Ventas y Finanzas</td>
+</tr>
+<tr>
+<td>Decisiones que se buscan mejorar</td>
+<td>Compra de melamina, programacion de produccion, precios por canal, evaluacion de rentabilidad retail vs mayorista</td>
+</tr>
+<tr>
+<td>Impacto esperado</td>
+<td>Reducir stock ocioso, mejorar margen, anticipar demanda estacional y controlar desperdicio de material</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-objetivo-analitico">3.2 Objetivo analitico</h3>
+<p>Analizar la rentabilidad por categoria y producto, la eficiencia en el uso de insumos frente a la demanda estacional y el desempeno de los canales de venta retail y mayorista, usando un DataMart validado y consumido desde Power BI.</p>
+<h3 id="33-matriz-de-preguntas-de-negocio">3.3 Matriz de preguntas de negocio</h3>
+<table>
+<thead>
+<tr>
+<th>Pregunta de negocio</th>
+<th>KPI relacionado</th>
+<th>Usuario</th>
+<th>Pestaña / visual Power BI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cual es el margen real del ropero considerando costos de materia prima y mano de obra?</td>
+<td>Margen Total, Margen Bruto %, Costo Total</td>
+<td>Gerente General</td>
+<td>DAX</td>
+</tr>
+<tr>
+<td>Que productos concentran la mayor venta y contribucion?</td>
+<td>Total Ventas, Cantidad Unidades, Margen Total</td>
+<td>Encargado de Ventas</td>
+<td>Detalle Producto</td>
+</tr>
+<tr>
+<td>Como se comportan las ventas por periodo y temporada?</td>
+<td>Total Ventas, Ventas Año Anterior, Variacion YoY</td>
+<td>Gerente General</td>
+<td>OLAP</td>
+</tr>
+<tr>
+<td>Que segmento aporta mas ingresos: retail o mayorista?</td>
+<td>Total Ventas por Tipo Cliente, Ticket Promedio</td>
+<td>Finanzas / Ventas</td>
+<td>Detalle Cliente</td>
+</tr>
+<tr>
+<td>Existe simetria entre SQL del Data Warehouse y Power BI?</td>
+<td>Diferencia %, Error de Reconciliacion</td>
+<td>Equipo BI</td>
+<td>TT Ventas</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-kpis-base-del-periodo-validado">3.4 KPIs base del periodo validado</h3>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th style="text-align: right;">Valor real del dataset base</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ventas totales</td>
+<td style="text-align: right;">S/ 40,730.00</td>
+<td><code>data.xlsx</code> hoja <code>venta</code> y <code>OLTP-Postgre/base_datos_transaccional.sql</code></td>
+</tr>
+<tr>
+<td>Transacciones</td>
+<td style="text-align: right;">31</td>
+<td>Filas de venta marzo 2026</td>
+</tr>
+<tr>
+<td>Unidades vendidas</td>
+<td style="text-align: right;">109</td>
+<td>Suma de <code>cantidad</code></td>
+</tr>
+<tr>
+<td>Ticket promedio por transaccion</td>
+<td style="text-align: right;">S/ 1,313.87</td>
+<td>S/ 40,730.00 / 31</td>
+</tr>
+<tr>
+<td>Costo material total estandar</td>
+<td style="text-align: right;">S/ 7,475.00</td>
+<td><code>cantidad * costo_estandar</code></td>
+</tr>
+<tr>
+<td>Margen de contribucion</td>
+<td style="text-align: right;">S/ 33,255.00</td>
+<td><code>importetotal - costomattotal - costomototal</code></td>
+</tr>
+<tr>
+<td>Margen de contribucion %</td>
+<td style="text-align: right;">81.65%</td>
+<td>S/ 33,255.00 / S/ 40,730.00</td>
+</tr>
+<tr>
+<td>Gastos operativos Excel</td>
+<td style="text-align: right;">S/ 23,970.00</td>
+<td><code>data.xlsx</code> hoja <code>gastos mes</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "content.code.copy"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>

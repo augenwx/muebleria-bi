@@ -1,0 +1,724 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentacion tecnica del proyecto End-to-End de Business Intelligence para Muebleria.">
+      
+      
+        <meta name="author" content="Grimaldo Arredondo Martinez y Jose Miguel Condo Huamani">
+      
+      
+      
+        <link rel="prev" href="../data_warehouse/">
+      
+      
+        <link rel="next" href="../validacion/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Metricas DAX y Visualizacion - Muebleria BI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metricas-dax-y-visualizacion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Muebleria BI" class="md-header__button md-logo" aria-label="Muebleria BI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Muebleria BI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Metricas DAX y Visualizacion
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio y Resumen
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../arquitectura/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Arquitectura e Ingesta
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../data_warehouse/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Modelo Estrella y dbt
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Metricas DAX y Visualizacion
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../validacion/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Calidad y Control de Datos
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Muebleria BI" class="md-nav__button md-logo" aria-label="Muebleria BI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Muebleria BI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inicio y Resumen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Arquitectura e Ingesta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_warehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Estrella y dbt
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Metricas DAX y Visualizacion
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metricas DAX y Visualizacion
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#9-metricas-del-negocio-e-implementacion-dax" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Metricas del negocio e implementacion DAX
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-dashboard-interactivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Dashboard interactivo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Dashboard interactivo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-objetivo-analitico-del-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Objetivo analitico del dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-pestanas-disenadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Pestañas diseñadas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-lectura-ejecutiva-de-la-carga-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 Lectura ejecutiva de la carga base
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Calidad y Control de Datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="metricas-dax-y-visualizacion">Metricas DAX y Visualizacion</h1>
+<h2 id="9-metricas-del-negocio-e-implementacion-dax">9. Metricas del negocio e implementacion DAX</h2>
+<p>Las medidas DAX se derivan de <code>fact_ventas</code> para mantener simetria con las consultas SQL del Data Warehouse.</p>
+<div class="highlight"><pre><span></span><code>Total Ventas :=
+<span class="nf">SUM</span><span class="p">(</span><span class="na">fact_ventas[importetotal]</span><span class="p">)</span>
+</code></pre></div>
+<p>Mide los ingresos totales. Para el dataset base validado debe devolver S/ 40,730.00.</p>
+<div class="highlight"><pre><span></span><code>Cantidad Unidades :=
+<span class="nf">SUM</span><span class="p">(</span><span class="na">fact_ventas[cantidad]</span><span class="p">)</span>
+</code></pre></div>
+<p>Mide el volumen total vendido. Para marzo 2026 debe devolver 109 unidades.</p>
+<div class="highlight"><pre><span></span><code>Cantidad Transacciones :=
+<span class="nf">COUNTROWS</span><span class="p">(</span>fact_ventas)
+</code></pre></div>
+<p>Cuenta las filas de venta cargadas al DataMart. Para la carga base debe devolver 31.</p>
+<div class="highlight"><pre><span></span><code>Margen Bruto :=
+<span class="nf">SUM</span><span class="p">(</span><span class="na">fact_ventas[margencontrib]</span><span class="p">)</span>
+</code></pre></div>
+<p>Agrega el margen calculado desde dbt como venta menos costo material y mano de obra.</p>
+<div class="highlight"><pre><span></span><code>Margen Bruto % :=
+<span class="nf">DIVIDE</span><span class="p">(</span>
+<span class="w">    </span><span class="na">[Margen Bruto]</span><span class="p">,</span>
+<span class="w">    </span><span class="na">[Total Ventas]</span><span class="p">,</span>
+<span class="w">    </span><span class="m">0</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Devuelve el porcentaje de margen sobre ventas. Con el costo estandar del mart base equivale a 81.65%.</p>
+<div class="highlight"><pre><span></span><code>Ticket Promedio :=
+<span class="nf">DIVIDE</span><span class="p">(</span>
+<span class="w">    </span><span class="na">[Total Ventas]</span><span class="p">,</span>
+<span class="w">    </span><span class="na">[Cantidad Transacciones]</span><span class="p">,</span>
+<span class="w">    </span><span class="m">0</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Permite evaluar el ingreso promedio por transaccion. Para la carga base es S/ 1,313.87.</p>
+<div class="highlight"><pre><span></span><code>Costo Total :=
+<span class="nf">SUM</span><span class="p">(</span><span class="na">fact_ventas[costomattotal]</span><span class="p">)</span>
+<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="nf">SUM</span><span class="p">(</span><span class="na">fact_ventas[costomototal]</span><span class="p">)</span>
+</code></pre></div>
+<p>Consolida costos directos de material y mano de obra registrados en el DataMart.</p>
+<div class="highlight"><pre><span></span><code>Ventas Año Anterior :=
+<span class="nf">CALCULATE</span><span class="p">(</span>
+<span class="w">    </span><span class="na">[Total Ventas]</span><span class="p">,</span>
+<span class="w">    </span><span class="nf">SAMEPERIODLASTYEAR</span><span class="p">(</span><span class="na">dim_fecha[fecha]</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Sirve para comparativos YoY cuando se carga el script <code>OLTP-Postgre/4_simular_ventas_2025.sql</code>.</p>
+<div class="highlight"><pre><span></span><code>Variacion Ventas YoY % :=
+<span class="nf">DIVIDE</span><span class="p">(</span>
+<span class="w">    </span><span class="na">[Total Ventas]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="na">[Ventas Año Anterior]</span><span class="p">,</span>
+<span class="w">    </span><span class="na">[Ventas Año Anterior]</span><span class="p">,</span>
+<span class="w">    </span><span class="m">0</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Mide la variacion porcentual de ventas frente al mismo periodo del ano anterior.</p>
+<h2 id="10-dashboard-interactivo">10. Dashboard interactivo</h2>
+<h3 id="101-objetivo-analitico-del-dashboard">10.1 Objetivo analitico del dashboard</h3>
+<p>El dashboard permite monitorear ventas, unidades, margen, clientes y productos para decidir compras de melamina, priorizacion de produccion, precios por canal y control de rentabilidad.</p>
+<h3 id="102-pestanas-disenadas">10.2 Pestañas diseñadas</h3>
+<table>
+<thead>
+<tr>
+<th>Pestaña</th>
+<th>Objetivo</th>
+<th>Componentes esperados</th>
+<th>Captura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAX</td>
+<td>Validar KPIs principales y medidas de negocio</td>
+<td>Tarjetas de Total Ventas, Unidades, Margen Bruto %, Ticket Promedio y Costo Total</td>
+<td><code>docs/assets/dashboard_dax.png</code></td>
+</tr>
+<tr>
+<td>OLAP</td>
+<td>Analizar ventas por jerarquia temporal</td>
+<td>Matriz Año &gt; Trimestre &gt; Mes &gt; Dia, grafico de tendencia y comparativo YoY</td>
+<td><code>docs/assets/dashboard_olap.png</code></td>
+</tr>
+<tr>
+<td>Detalle Producto</td>
+<td>Identificar productos de mayor venta y margen</td>
+<td>Ranking de productos, barras por ventas, tabla de unidades y margen</td>
+<td><code>docs/assets/dashboard_detalle_producto.png</code></td>
+</tr>
+<tr>
+<td>Detalle Cliente</td>
+<td>Evaluar clientes y segmentos retail/mayorista</td>
+<td>Ventas por cliente, tipo cliente, canal y ticket promedio</td>
+<td><code>docs/assets/dashboard_detalle_cliente.png</code></td>
+</tr>
+<tr>
+<td>TT Ventas</td>
+<td>Control tabular y reconciliacion</td>
+<td>Tabla de ventas, importes, costos, margen y filtros por fecha/producto/cliente</td>
+<td><code>docs/assets/dashboard_tt_ventas.png</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="103-lectura-ejecutiva-de-la-carga-base">10.3 Lectura ejecutiva de la carga base</h3>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Producto lider</td>
+<td style="text-align: right;">Ropero</td>
+</tr>
+<tr>
+<td>Ventas de Ropero</td>
+<td style="text-align: right;">S/ 29,130.00</td>
+</tr>
+<tr>
+<td>Participacion de Ropero</td>
+<td style="text-align: right;">71.52%</td>
+</tr>
+<tr>
+<td>Segmento retail</td>
+<td style="text-align: right;">S/ 26,800.00</td>
+</tr>
+<tr>
+<td>Segmento mayorista</td>
+<td style="text-align: right;">S/ 13,930.00</td>
+</tr>
+<tr>
+<td>Ventas contado</td>
+<td style="text-align: right;">S/ 32,640.00</td>
+</tr>
+<tr>
+<td>Ventas credito</td>
+<td style="text-align: right;">S/ 8,090.00</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
