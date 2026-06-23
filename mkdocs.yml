@@ -17,6 +17,8 @@ theme:
 
 nav:
   - Inicio y Resumen: index.md
+  - Unidad 1 - Requerimientos BI: unidad_1_requerimientos.md
+  - Unidad 2 - Pipeline BI: unidad_2_pipeline.md
   - Arquitectura e Ingesta: arquitectura.md
   - Modelo Estrella y dbt: data_warehouse.md
   - Metricas DAX y Visualizacion: dashboard.md
