@@ -1,0 +1,90 @@
+table 'marts dim_producto'
+	lineageTag: 77a04aa0-3756-4bce-bbb8-5b97b1d9b9c6
+
+	column producto_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ffc8fe6c-dbd7-43e0-91a8-28b9e87946e5
+		summarizeBy: none
+		sourceColumn: producto_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 815e42b3-8332-4dbc-b9f8-3d82c89453aa
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column costo_estandar
+		dataType: double
+		lineageTag: 7f416197-5fc1-4d49-ba43-450b204e5f52
+		summarizeBy: sum
+		sourceColumn: costo_estandar
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precio_venta_retail
+		dataType: double
+		lineageTag: 5b2f2ca2-363a-41e5-8ea8-dba4b77c508a
+		summarizeBy: sum
+		sourceColumn: precio_venta_retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precio_venta_mayorista
+		dataType: double
+		lineageTag: e164ab05-4143-46c0-bd9c-15022dcb80bb
+		summarizeBy: sum
+		sourceColumn: precio_venta_mayorista
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margen_retail
+		dataType: double
+		lineageTag: 2d1e7230-525a-4983-b61b-5dff5eecd895
+		summarizeBy: sum
+		sourceColumn: margen_retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margen_mayorista
+		dataType: double
+		lineageTag: 149ad7d3-cc3b-4454-a6b4-4a9609ce5a3c
+		summarizeBy: sum
+		sourceColumn: margen_mayorista
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column activo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e237d620-6023-437c-84a4-a7baf6eb5a86
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_producto' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_producto = Origen{[Schema="marts",Item="dim_producto"]}[Data]
+				in
+				    marts_dim_producto
+
+	annotation PBI_ResultType = Table
+

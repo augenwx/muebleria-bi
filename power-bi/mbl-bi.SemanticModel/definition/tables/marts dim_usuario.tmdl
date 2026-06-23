@@ -1,0 +1,56 @@
+table 'marts dim_usuario'
+	lineageTag: 2c1f9927-a8ce-4ce3-b7ed-8094deb12be9
+
+	column usuario_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fb1c529-274b-4926-9661-a175883cbd21
+		summarizeBy: none
+		sourceColumn: usuario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 94c2befb-dbdc-4a63-8e6e-882616b5e136
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 8046fd30-fde2-4e35-bfa8-fef28b4ade1a
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column rol
+		dataType: string
+		lineageTag: 4bae94c5-94d5-42ce-af02-c5a95920dd27
+		summarizeBy: none
+		sourceColumn: rol
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e59a7b91-351c-4588-a31f-ef2dc74af7de
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_usuario' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_usuario = Origen{[Schema="marts",Item="dim_usuario"]}[Data]
+				in
+				    marts_dim_usuario
+
+	annotation PBI_ResultType = Table
+

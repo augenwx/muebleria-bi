@@ -1,176 +1,210 @@
--- 
+-- ============================================================
+-- 1_dm.sql  — 4.0
 -- CREACIÓN DE LA ESTRUCTURA DEL DATAMART (MODELO ESTRELLA)
+-- Esquema: marts
+--
 
 -- ============================================================
 
-CREATE SCHEMA IF NOT EXISTS estrella;
-SET search_path TO estrella, transaccional, public;
+CREATE SCHEMA IF NOT EXISTS marts;
+SET search_path TO marts, transaccional, public;
 
 -- Limpiar si el proceso falló antes
-DROP TABLE IF EXISTS HVENTAS           CASCADE;
-DROP TABLE IF EXISTS HPRODUCCION       CASCADE;
-DROP TABLE IF EXISTS HCOMPRAS_MATERIAL CASCADE;
-DROP TABLE IF EXISTS HGASTOS           CASCADE;
-DROP VIEW  IF EXISTS vw_g_ventas_muebleria CASCADE;
-DROP TABLE IF EXISTS DTIEMPO           CASCADE;
-DROP TABLE IF EXISTS DPRODUCTO         CASCADE;
-DROP TABLE IF EXISTS DCLIENTE          CASCADE;
-DROP TABLE IF EXISTS DMATERIAL         CASCADE;
-DROP TABLE IF EXISTS DCATEGORIA_GASTO  CASCADE;
+DROP TABLE IF EXISTS fact_ventas         CASCADE;
+DROP TABLE IF EXISTS fact_produccion     CASCADE;
+DROP TABLE IF EXISTS fact_inventario     CASCADE;
+DROP TABLE IF EXISTS fact_gastos         CASCADE;
+DROP TABLE IF EXISTS dim_tiempo          CASCADE;
+DROP TABLE IF EXISTS dim_producto        CASCADE;
+DROP TABLE IF EXISTS dim_cliente         CASCADE;
+DROP TABLE IF EXISTS dim_material        CASCADE;
+DROP TABLE IF EXISTS dim_categoria_gasto CASCADE;
+DROP TABLE IF EXISTS dim_proveedor       CASCADE;
+DROP TABLE IF EXISTS dim_destino_prod    CASCADE;
+DROP TABLE IF EXISTS dim_tipo_venta      CASCADE;
+DROP TABLE IF EXISTS dim_usuario         CASCADE;
 
 -- ============================================================
 -- DIMENSIONES
 -- ============================================================
 
--- DTIEMPO: una fila por cada fecha presente en los hechos
-CREATE TABLE DTIEMPO (
-    IDFECHA     INT          PRIMARY KEY,   -- clave YYYYMMDD
-    FECHA       DATE         NOT NULL,
-    DIA         INT          NOT NULL,
-    MES         INT          NOT NULL,
-    MESNOMBRE   VARCHAR(15)  NOT NULL,
-    TRIMESTRE   INT          NOT NULL,
-    ANIO        INT          NOT NULL,
-    TEMPORADA   VARCHAR(20),               -- 'Alta' / 'Normal'
-    ES_PICO     BOOLEAN
+-- dim_tiempo: una fila por cada fecha presente en los hechos
+CREATE TABLE dim_tiempo (
+    fecha_key         INT          PRIMARY KEY,   -- clave YYYYMMDD
+    fecha             DATE         NOT NULL,
+    dia               INT          NOT NULL,
+    mes               INT          NOT NULL,
+    mes_nombre        TEXT         NOT NULL,
+    trimestre         INT          NOT NULL,
+    anio              INT          NOT NULL,
+    dia_semana_num    INT          NOT NULL,
+    dia_semana_nombre TEXT         NOT NULL,
+    semana_anio       INT          NOT NULL
 );
 
--- DPRODUCTO: productos con costos y precio (SCD Tipo 2 preparado)
-CREATE TABLE DPRODUCTO (
-    IDPRODUCTO    SERIAL        PRIMARY KEY,
-    CDPRODUCTO    VARCHAR(80)   NOT NULL UNIQUE,
-    DSPRODUCTO    VARCHAR(100)  NOT NULL,
-    CDCATEGORIA   VARCHAR(60),
-    PRECIOVENTA   NUMERIC(10,2),
-    COSTOMATERIAL NUMERIC(10,2),
-    COSTOMANOOBRA NUMERIC(10,2),
-    ES_ESTRELLA   BOOLEAN,
-    FECHA_DESDE   DATE          DEFAULT CURRENT_DATE,
-    FECHA_HASTA   DATE          DEFAULT '9999-12-31',
-    ES_VIGENTE    BOOLEAN       DEFAULT TRUE
+-- dim_producto: productos con precios y márgenes estándar
+CREATE TABLE dim_producto (
+    producto_id            BIGINT,
+    nombre                 VARCHAR,
+    costo_estandar         NUMERIC,
+    precio_venta_retail    NUMERIC,
+    precio_venta_mayorista NUMERIC,
+    margen_retail          NUMERIC,
+    margen_mayorista       NUMERIC,
+    activo                 BOOLEAN
 );
 
--- DCLIENTE: dimensión de clientes reales (ahora la OLTP tiene tabla cliente)
-CREATE TABLE DCLIENTE (
-    IDCLIENTE     SERIAL       PRIMARY KEY,
-    CDCLIENTE     VARCHAR(30)  NOT NULL UNIQUE,   -- documento del cliente
-    NOMBRE        VARCHAR(150) NOT NULL,
-    TIPOCLIENTE   VARCHAR(20)  NOT NULL,           -- 'Retail' / 'Mayorista'
-    CANAL         VARCHAR(30),
-    LIMITE_CREDITO NUMERIC(12,2),
-    FRECUENCIA    VARCHAR(20)                      -- se completa con historial multi-mes
+-- dim_cliente: clientes con tipo (Retail / Mayorista)
+CREATE TABLE dim_cliente (
+    cliente_id      BIGINT,
+    documento       VARCHAR,
+    nombre          VARCHAR,
+    razon_social    VARCHAR,
+    tipo_cliente    VARCHAR,
+    direccion       VARCHAR,
+    telefono        VARCHAR,
+    email           VARCHAR,
+    limite_credito  NUMERIC,
+    estado          VARCHAR,
+    activo          BOOLEAN
 );
 
--- DMATERIAL: materiales con FK real desde compra_material (ya no texto libre)
-CREATE TABLE DMATERIAL (
-    IDMATERIAL   SERIAL       PRIMARY KEY,
-    CDMATERIAL   VARCHAR(80)  NOT NULL UNIQUE,    -- 'MAT_' + nombre normalizado
-    DSMATERIAL   VARCHAR(150) NOT NULL,
-    TIPO         VARCHAR(30),
-    UNIDADMEDIDA VARCHAR(20),
-    PROVEEDOR    VARCHAR(100)
+-- dim_material: materias primas con unidad de medida
+CREATE TABLE dim_material (
+    material_id        BIGINT,
+    nombre             VARCHAR,
+    unidad_nombre      VARCHAR,
+    unidad_abreviatura VARCHAR,
+    stock_minimo       NUMERIC,
+    activo             BOOLEAN
 );
 
--- DCATEGORIA_GASTO: categorías de la tabla gasto
-CREATE TABLE DCATEGORIA_GASTO (
-    IDCATEGORIA  SERIAL       PRIMARY KEY,
-    CDCATEGORIA  VARCHAR(30)  NOT NULL UNIQUE,
-    DSCATEGORIA  VARCHAR(150) NOT NULL,
-    TIPO         VARCHAR(30)                      -- 'fijo' / 'variable'
+-- dim_categoria_gasto: categorías de gasto (fijo / variable)
+CREATE TABLE dim_categoria_gasto (
+    categoria_id BIGINT,
+    categoria    VARCHAR,
+    tipo_gasto   VARCHAR
+);
+
+-- dim_proveedor: proveedores de materiales
+CREATE TABLE dim_proveedor (
+    proveedor_id BIGINT,
+    ruc          VARCHAR,
+    nombre       VARCHAR,
+    contacto     VARCHAR,
+    telefono     VARCHAR,
+    email        VARCHAR,
+    direccion    VARCHAR,
+    activo       BOOLEAN
+);
+
+-- dim_destino_prod: destino de la producción
+CREATE TABLE dim_destino_prod (
+    destino_id BIGINT,
+    destino    VARCHAR
+);
+
+-- dim_tipo_venta: tipo de venta (Contado / Crédito)
+CREATE TABLE dim_tipo_venta (
+    tipo_venta_id BIGINT,
+    tipo_venta    VARCHAR
+);
+
+-- dim_usuario: usuarios del sistema
+CREATE TABLE dim_usuario (
+    usuario_id BIGINT,
+    nombre     VARCHAR,
+    email      VARCHAR,
+    rol        VARCHAR,
+    activo     BOOLEAN
 );
 
 -- ============================================================
 -- TABLAS DE HECHOS
 -- ============================================================
 
--- HVENTAS: una fila por línea de detalle_venta (multi-producto por venta)
-CREATE TABLE HVENTAS (
-    IDHVENTA       SERIAL        PRIMARY KEY,
-    -- claves de dimensión
-    IDFECHA        INT           NOT NULL REFERENCES DTIEMPO(IDFECHA),
-    IDPRODUCTO     INT           NOT NULL REFERENCES DPRODUCTO(IDPRODUCTO),
-    IDCLIENTE      INT           NOT NULL REFERENCES DCLIENTE(IDCLIENTE),
-    -- referencia a venta origen
-    IDVENTA_OLTP   INT           NOT NULL,        -- venta.id en OLTP
-    -- métricas de venta
-    CANTIDAD       NUMERIC(10,3) NOT NULL,
-    PRECIOUNITVTA  NUMERIC(10,2) NOT NULL,
-    IMPORTETOTAL   NUMERIC(12,2) NOT NULL,        -- subtotal de la línea
-    TIPOVENTA      VARCHAR(20)   NOT NULL,
-    -- métricas de costo y margen
-    COSTOESTANDAR  NUMERIC(10,2),                 -- producto.costo_estandar
-    COSTOMATTOTAL  NUMERIC(12,2) NOT NULL,        -- costo_estandar * cantidad
-    COSTOALMACEN   NUMERIC(10,2),                 -- alquiler prorrateado
-    MARGENCONTRIB  NUMERIC(12,2) NOT NULL,
-    PCTMARGEN      NUMERIC(6,2),
-    -- métricas de análisis adicionales
-    ES_DEVUELTO    BOOLEAN       DEFAULT FALSE,
-    MONTO_DEV      NUMERIC(12,2) DEFAULT 0,
-    ES_TEMPORADA   BOOLEAN
+-- fact_ventas: una fila por línea de detalle_venta
+CREATE TABLE fact_ventas (
+    detalle_venta_id BIGINT,
+    tiempo_key       INT            NOT NULL REFERENCES dim_tiempo(fecha_key),
+    cliente_id       BIGINT,
+    producto_id      BIGINT,
+    tipo_venta_id    BIGINT,
+    usuario_id       BIGINT,
+    venta_id_oltp    BIGINT,
+    cantidad         BIGINT,
+    precio_unitario  NUMERIC,
+    subtotal         NUMERIC,
+    costo_estandar   NUMERIC,
+    costo_total      NUMERIC,
+    margen_bruto     NUMERIC,
+    pct_margen       NUMERIC
 );
 
--- HPRODUCCION: una fila por lote de producción real
-CREATE TABLE HPRODUCCION (
-    IDHPRODUCCION  SERIAL        PRIMARY KEY,
-    IDFECHA        INT           NOT NULL REFERENCES DTIEMPO(IDFECHA),
-    IDPRODUCTO     INT           NOT NULL REFERENCES DPRODUCTO(IDPRODUCTO),
-    IDORDEN_OLTP   INT,                           -- orden_produccion.id en OLTP
-    CANTPRODUCIDA  NUMERIC(10,3) NOT NULL,
-    -- costos totales del lote (corrección v3: ya no por unidad)
-    COSTOMATTOTAL  NUMERIC(12,2) NOT NULL,
-    COSTOMOTOTAL   NUMERIC(12,2) NOT NULL,
-    COSTOTOTALPROD NUMERIC(12,2) NOT NULL,
-    COSTOUNITARIO  NUMERIC(10,4),                 -- calculado: total/cantidad
-    DESTINO        VARCHAR(50)
+-- fact_produccion: una fila por lote de producción
+CREATE TABLE fact_produccion (
+    produccion_id       BIGINT,
+    tiempo_key          INT            NOT NULL REFERENCES dim_tiempo(fecha_key),
+    producto_id         BIGINT,
+    destino_id          BIGINT,
+    usuario_id          BIGINT,
+    orden_id_oltp       BIGINT,
+    numero_orden        VARCHAR,
+    cantidad_producida  BIGINT,
+    costo_materia_prima NUMERIC,
+    mano_de_obra        NUMERIC,
+    costo_total         NUMERIC,
+    costo_unitario      NUMERIC
 );
 
--- HCOMPRAS_MATERIAL: una fila por compra de material
-CREATE TABLE HCOMPRAS_MATERIAL (
-    IDHCOMPRA      SERIAL        PRIMARY KEY,
-    IDFECHA        INT           NOT NULL REFERENCES DTIEMPO(IDFECHA),
-    IDMATERIAL     INT           NOT NULL REFERENCES DMATERIAL(IDMATERIAL),
-    IDCOMPRA_OLTP  INT,                           -- compra_material.id en OLTP
-    CANTCOMPRADA   NUMERIC(10,3) NOT NULL,
-    PRECIOUNIT     NUMERIC(10,4) NOT NULL,
-    TOTALCOMPRA    NUMERIC(12,2) NOT NULL,
-    COSTOCOMPTOTAL NUMERIC(12,2) NOT NULL,
-    STOCKANTES     NUMERIC(10,3),
-    STOCKDESPUES   NUMERIC(10,3),
-    ES_EMERG       BOOLEAN,
-    ES_TEMPORADA   BOOLEAN
+-- fact_inventario: una fila por movimiento de material (Kardex)
+CREATE TABLE fact_inventario (
+    movimiento_id    BIGINT,
+    tiempo_key       INT            NOT NULL REFERENCES dim_tiempo(fecha_key),
+    material_id      BIGINT,
+    proveedor_id     BIGINT,        -- NULL para salidas y ajustes
+    tipo_movimiento  VARCHAR,
+    cantidad         NUMERIC,
+    precio_unitario  NUMERIC,
+    total_valor      NUMERIC,
+    referencia_id    BIGINT,
+    referencia_tabla VARCHAR,
+    notas            VARCHAR
 );
 
--- HGASTOS: una fila por gasto individual (tabla gasto de la nueva OLTP)
-CREATE TABLE HGASTOS (
-    IDHGASTO      SERIAL        PRIMARY KEY,
-    IDFECHA       INT           NOT NULL REFERENCES DTIEMPO(IDFECHA),
-    IDCATEGORIA   INT           NOT NULL REFERENCES DCATEGORIA_GASTO(IDCATEGORIA),
-    IDGASTO_OLTP  INT,                            -- gasto.id en OLTP
-    ANIO          SMALLINT      NOT NULL,
-    MES           SMALLINT      NOT NULL,
-    MONTO         NUMERIC(12,2) NOT NULL,
-    DETALLE       TEXT,
-    ES_FIJO       BOOLEAN
+-- fact_gastos: una fila por gasto operativo registrado
+CREATE TABLE fact_gastos (
+    gasto_id     BIGINT,
+    tiempo_key   INT            NOT NULL REFERENCES dim_tiempo(fecha_key),
+    categoria_id BIGINT,
+    usuario_id   BIGINT,
+    anio         BIGINT,
+    mes          BIGINT,
+    monto        NUMERIC,
+    detalle      VARCHAR,
+    comprobante  VARCHAR
 );
 
 -- ============================================================
 -- ÍNDICES EN CLAVES FORÁNEAS (mejora consultas analíticas)
 -- ============================================================
 
-CREATE INDEX idx_hventas_fecha      ON HVENTAS(IDFECHA);
-CREATE INDEX idx_hventas_producto   ON HVENTAS(IDPRODUCTO);
-CREATE INDEX idx_hventas_cliente    ON HVENTAS(IDCLIENTE);
-CREATE INDEX idx_hventas_tipo       ON HVENTAS(TIPOVENTA);
+CREATE INDEX idx_fact_ventas_tiempo     ON fact_ventas(tiempo_key);
+CREATE INDEX idx_fact_ventas_cliente    ON fact_ventas(cliente_id);
+CREATE INDEX idx_fact_ventas_producto   ON fact_ventas(producto_id);
+CREATE INDEX idx_fact_ventas_tipo       ON fact_ventas(tipo_venta_id);
 
-CREATE INDEX idx_hprod_fecha        ON HPRODUCCION(IDFECHA);
-CREATE INDEX idx_hprod_producto     ON HPRODUCCION(IDPRODUCTO);
+CREATE INDEX idx_fact_prod_tiempo       ON fact_produccion(tiempo_key);
+CREATE INDEX idx_fact_prod_producto     ON fact_produccion(producto_id);
+CREATE INDEX idx_fact_prod_destino      ON fact_produccion(destino_id);
 
-CREATE INDEX idx_hcompras_fecha     ON HCOMPRAS_MATERIAL(IDFECHA);
-CREATE INDEX idx_hcompras_material  ON HCOMPRAS_MATERIAL(IDMATERIAL);
+CREATE INDEX idx_fact_inv_tiempo        ON fact_inventario(tiempo_key);
+CREATE INDEX idx_fact_inv_material      ON fact_inventario(material_id);
+CREATE INDEX idx_fact_inv_proveedor     ON fact_inventario(proveedor_id);
 
-CREATE INDEX idx_hgastos_fecha      ON HGASTOS(IDFECHA);
-CREATE INDEX idx_hgastos_categoria  ON HGASTOS(IDCATEGORIA);
-CREATE INDEX idx_hgastos_anio_mes   ON HGASTOS(ANIO, MES);
+CREATE INDEX idx_fact_gastos_tiempo     ON fact_gastos(tiempo_key);
+CREATE INDEX idx_fact_gastos_categoria  ON fact_gastos(categoria_id);
+CREATE INDEX idx_fact_gastos_anio_mes   ON fact_gastos(anio, mes);
 
 -- ============================================================
 -- FIN 1_dm.sql

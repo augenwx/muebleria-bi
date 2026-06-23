@@ -1,0 +1,210 @@
+table Medidas
+	lineageTag: 21777153-e05a-4b38-b2b7-1f7fc58c9b5c
+
+	measure 'Total Ventas' = SUM('marts fact_ventas'[subtotal])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: f30f74d4-2794-4d18-b0df-50fd6e3ffb16
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Total Unidades' = SUM('marts fact_ventas'[cantidad])
+		lineageTag: 521e0c8b-1321-4e72-b687-f8dd5746f594
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margen Bruto' = SUM('marts fact_ventas'[margen_bruto])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: 75e4a403-3ce1-4110-8b4b-5fde1dd23c1d
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure '% Margen' = DIVIDE([Margen Bruto], [Total Ventas], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8d49359e-cadc-452e-b307-de27444b489a
+
+	measure 'Costo Ventas' = SUM('marts fact_ventas'[costo_total])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Ticket Promedio' = DIVIDE([Total Ventas], DISTINCTCOUNT('marts fact_ventas'[venta_id_oltp]), 0)
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: b2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Total Gastos' = SUM('marts fact_gastos'[monto])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: c3e4f5a6-b7c8-4d9e-0f1a-2b3c4d5e6f7a
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Unidades Producidas' = SUM('marts fact_produccion'[cantidad_producida])
+		lineageTag: d4f5a6b7-c8d9-4e0f-1a2b-3c4d5e6f7a8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Venta Acumulada Mes' = TOTALMTD([Total Ventas], 'marts dim_tiempo'[fecha])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Var Ventas vs Mes Ant %' =
+			VAR MesAct = MAX('marts dim_tiempo'[mes])
+			VAR AnioAct = MAX('marts dim_tiempo'[anio])
+			VAR MesAnt = IF(MesAct = 1, 12, MesAct - 1)
+			VAR AnioAnt = IF(MesAct = 1, AnioAct - 1, AnioAct)
+			VAR VtaAct = CALCULATE([Total Ventas], 'marts dim_tiempo'[mes] = MesAct, 'marts dim_tiempo'[anio] = AnioAct)
+			VAR VtaAnt = CALCULATE([Total Ventas], ALL('marts dim_tiempo'), 'marts dim_tiempo'[mes] = MesAnt, 'marts dim_tiempo'[anio] = AnioAnt)
+			RETURN DIVIDE(VtaAct - VtaAnt, VtaAnt, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c
+
+	measure 'Ordenes Completadas' = DISTINCTCOUNT('marts fact_produccion'[orden_id_oltp])
+		lineageTag: a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Costo Produccion' = SUM('marts fact_produccion'[costo_total])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Costo Unitario Real' = DIVIDE(SUM('marts fact_produccion'[costo_total]), SUM('marts fact_produccion'[cantidad_producida]), 0)
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: c9d0e1f2-a3b4-4c5d-6e7f-8a9b0c1d2e3f
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Costo Materia Prima' = SUM('marts fact_produccion'[costo_materia_prima])
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: d0e1f2a3-b4c5-4d6e-7f8a-9b0c1d2e3f4a
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Margen Real Produccion %' =
+			VAR CostoUnit = DIVIDE(SUM('marts fact_produccion'[costo_total]), SUM('marts fact_produccion'[cantidad_producida]), 0)
+			VAR PrecioVta = AVERAGE('marts dim_producto'[precio_venta_retail])
+			RETURN DIVIDE(PrecioVta - CostoUnit, PrecioVta, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: e1f2a3b4-c5d6-4e7f-8a9b-0c1d2e3f4a5b
+
+	measure 'Entradas Material' = CALCULATE(SUM('marts fact_inventario'[cantidad]), 'marts fact_inventario'[tipo_movimiento] = "entrada")
+		lineageTag: f2a3b4c5-d6e7-4f8a-9b0c-1d2e3f4a5b6c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Salidas Material' = CALCULATE(SUM('marts fact_inventario'[cantidad]), 'marts fact_inventario'[tipo_movimiento] = "salida")
+		lineageTag: a3b4c5d6-e7f8-4a9b-0c1d-2e3f4a5b6c7d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Compras del Mes' = CALCULATE(SUM('marts fact_inventario'[total_valor]), 'marts fact_inventario'[tipo_movimiento] = "entrada")
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: b4c5d6e7-f8a9-4b0c-1d2e-3f4a5b6c7d8e
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Ratio Compras vs Consumo' = DIVIDE([Entradas Material], [Salidas Material], 0)
+		formatString: 0.00
+		lineageTag: c5d6e7f8-a9b0-4c1d-2e3f-4a5b6c7d8e9f
+
+	measure 'Materiales Bajo Stock' =
+			COUNTROWS(
+				FILTER(
+					'marts dim_material',
+					CALCULATE(
+						SUMX('marts fact_inventario',
+							IF('marts fact_inventario'[tipo_movimiento] = "entrada", 'marts fact_inventario'[cantidad], -'marts fact_inventario'[cantidad])
+						)
+					) < 'marts dim_material'[stock_minimo]
+				)
+			)
+		lineageTag: d6e7f8a9-b0c1-4d2e-3f4a-5b6c7d8e9f0a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dias Inventario' =
+			VAR StockAct = [Entradas Material] - [Salidas Material]
+			VAR ConsumoDiario = DIVIDE([Salidas Material], 30, 0)
+			RETURN DIVIDE(StockAct, ConsumoDiario, 0)
+		formatString: 0.0
+		lineageTag: e7f8a9b0-c1d2-4e3f-4a5b-6c7d8e9f0a1b
+
+	measure 'Gastos Fijos' = CALCULATE([Total Gastos], 'marts dim_categoria_gasto'[tipo_gasto] = "fijo")
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: f8a9b0c1-d2e3-4f4a-5b6c-7d8e9f0a1b2c
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Gastos Variables' = CALCULATE([Total Gastos], 'marts dim_categoria_gasto'[tipo_gasto] = "variable")
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		lineageTag: a9b0c1d2-e3f4-4a5b-6c7d-8e9f0a1b2c3d
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Gastos % Ventas' = DIVIDE([Total Gastos], [Total Ventas], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: b0c1d2e3-f4a5-4b6c-7d8e-9f0a1b2c3d4e
+
+	measure 'Var Gastos vs Mes Ant %' =
+			VAR MesAct = MAX('marts dim_tiempo'[mes])
+			VAR AnioAct = MAX('marts dim_tiempo'[anio])
+			VAR MesAnt = IF(MesAct = 1, 12, MesAct - 1)
+			VAR AnioAnt = IF(MesAct = 1, AnioAct - 1, AnioAct)
+			VAR GastoAct = CALCULATE([Total Gastos], 'marts dim_tiempo'[mes] = MesAct, 'marts dim_tiempo'[anio] = AnioAct)
+			VAR GastoAnt = CALCULATE([Total Gastos], ALL('marts dim_tiempo'), 'marts dim_tiempo'[mes] = MesAnt, 'marts dim_tiempo'[anio] = AnioAnt)
+			RETURN DIVIDE(GastoAct - GastoAnt, GastoAnt, 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: c1d2e3f4-a5b6-4c7d-8e9f-0a1b2c3d4e5f
+
+	measure 'Rotacion de Materiales' =
+			VAR StockActual = [Entradas Material] - [Salidas Material]
+			VAR StockPromedio = DIVIDE([Entradas Material] + StockActual, 2, 0)
+			RETURN DIVIDE([Salidas Material], StockPromedio, 0)
+		formatString: 0.00
+		lineageTag: f4a5b6c7-d8e9-4a0b-1c2d-3e4f5a6b7c8d
+
+	measure 'Productos Bajo Reorden' =
+			COUNTROWS(
+				FILTER(
+					'marts dim_producto',
+					VAR Producido = CALCULATE(SUM('marts fact_produccion'[cantidad_producida]))
+					VAR Vendido = CALCULATE(SUM('marts fact_ventas'[cantidad]))
+					VAR Disponible = Producido - Vendido
+					RETURN Disponible < 10
+				)
+			)
+		formatString: 0
+		lineageTag: a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+
+	measure 'Stock vs Punto Reorden' =
+			VAR Producido = SUM('marts fact_produccion'[cantidad_producida])
+			VAR Vendido = CALCULATE(SUM('marts fact_ventas'[cantidad]), ALL('marts dim_tiempo'))
+			VAR Disponible = Producido - Vendido
+			RETURN DIVIDE(Disponible, 10, 0)
+		formatString: 0.00 %
+		lineageTag: b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
+
+	column Columna1
+		dataType: string
+		lineageTag: 0120d0da-5ea1-4600-865b-ad4b093b4930
+		summarizeBy: none
+		sourceColumn: Columna1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

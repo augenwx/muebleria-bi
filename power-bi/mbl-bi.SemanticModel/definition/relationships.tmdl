@@ -1,0 +1,65 @@
+relationship 1f6ea9b0-efb7-4271-aff3-5b4383f33b99
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'marts dim_tiempo'.fecha
+	toColumn: LocalDateTable_4b75eb32-e99c-4750-9a2f-b4d468349af5.Date
+
+relationship AutoDetected_befc5b4c-458b-4737-9fa3-279ea0a609bb
+	fromColumn: 'marts fact_ventas'.cliente_id
+	toColumn: 'marts dim_cliente'.cliente_id
+
+relationship AutoDetected_f47d3dda-eb33-4031-8a4a-ea5a1db91058
+	fromColumn: 'marts fact_ventas'.producto_id
+	toColumn: 'marts dim_producto'.producto_id
+
+relationship AutoDetected_d4b27d91-8ad5-424c-9561-7a622fe145e7
+	fromColumn: 'marts fact_produccion'.producto_id
+	toColumn: 'marts dim_producto'.producto_id
+
+relationship AutoDetected_c85711f5-e44a-4c5e-975e-0abee0dc711d
+	fromColumn: 'marts fact_ventas'.tipo_venta_id
+	toColumn: 'marts dim_tipo_venta'.tipo_venta_id
+
+relationship AutoDetected_8bee10e2-9e7b-41e6-9f45-765030fff493
+	fromColumn: 'marts fact_ventas'.usuario_id
+	toColumn: 'marts dim_usuario'.usuario_id
+
+relationship AutoDetected_9aa1d76a-2212-4da0-9638-38d6178be62f
+	fromColumn: 'marts fact_produccion'.usuario_id
+	toColumn: 'marts dim_usuario'.usuario_id
+
+relationship AutoDetected_15ffbe2c-4324-47b3-933c-fe2f183ae854
+	fromColumn: 'marts fact_gastos'.usuario_id
+	toColumn: 'marts dim_usuario'.usuario_id
+
+relationship AutoDetected_baadec8a-bfe7-4aa9-b997-0d8e1f4aa8ff
+	fromColumn: 'marts fact_inventario'.material_id
+	toColumn: 'marts dim_material'.material_id
+
+relationship AutoDetected_9db1eafe-e015-4d17-97e9-e3c7128567af
+	fromColumn: 'marts fact_inventario'.proveedor_id
+	toColumn: 'marts dim_proveedor'.proveedor_id
+
+relationship AutoDetected_44d2c3bc-35ca-4dfd-82a4-9c9167bb904b
+	fromColumn: 'marts fact_produccion'.destino_id
+	toColumn: 'marts dim_destino_prod'.destino_id
+
+relationship AutoDetected_069e9887-6d84-4054-9704-a6be6a04ceb1
+	fromColumn: 'marts fact_gastos'.categoria_id
+	toColumn: 'marts dim_categoria_gasto'.categoria_id
+
+relationship rel_ventas_tiempo
+	fromColumn: 'marts fact_ventas'.tiempo_key
+	toColumn: 'marts dim_tiempo'.fecha_key
+
+relationship rel_produccion_tiempo
+	fromColumn: 'marts fact_produccion'.tiempo_key
+	toColumn: 'marts dim_tiempo'.fecha_key
+
+relationship rel_inventario_tiempo
+	fromColumn: 'marts fact_inventario'.tiempo_key
+	toColumn: 'marts dim_tiempo'.fecha_key
+
+relationship rel_gastos_tiempo
+	fromColumn: 'marts fact_gastos'.tiempo_key
+	toColumn: 'marts dim_tiempo'.fecha_key
+

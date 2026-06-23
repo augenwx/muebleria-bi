@@ -1,0 +1,146 @@
+table 'marts fact_ventas'
+	lineageTag: 43d80a4b-a8a8-48dc-b9f3-c1dc7144fb1f
+
+	column detalle_venta_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b2cd771-f7d9-4932-9d3f-506352fa5a2d
+		summarizeBy: sum
+		sourceColumn: detalle_venta_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tiempo_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 17838aab-b084-4560-9c4a-e7c9fc0e61f8
+		summarizeBy: sum
+		sourceColumn: tiempo_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column cliente_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bbdfc9c9-3404-4532-acd5-cbf149cfb52f
+		summarizeBy: none
+		sourceColumn: cliente_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column producto_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e006be7-1b4a-4638-872b-3b5e28114a29
+		summarizeBy: none
+		sourceColumn: producto_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_venta_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a93f8d3-3cc1-4a29-9c0c-a5a7d795c8da
+		summarizeBy: none
+		sourceColumn: tipo_venta_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 34e6a1d4-c464-4996-8ae8-c2c251c0dfc4
+		summarizeBy: none
+		sourceColumn: usuario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column venta_id_oltp
+		dataType: int64
+		formatString: 0
+		lineageTag: 30f16458-6d3b-47d5-af3f-03b8c47d4e74
+		summarizeBy: sum
+		sourceColumn: venta_id_oltp
+
+		annotation SummarizationSetBy = Automatic
+
+	column cantidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 44bedd0b-b790-4796-90f8-c59b3e84426a
+		summarizeBy: sum
+		sourceColumn: cantidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column precio_unitario
+		dataType: double
+		lineageTag: 9a97d605-4f0e-4466-bb70-63f455506f31
+		summarizeBy: sum
+		sourceColumn: precio_unitario
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column subtotal
+		dataType: double
+		lineageTag: d90d9c74-87f0-422e-9a4b-3450e714bd15
+		summarizeBy: sum
+		sourceColumn: subtotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column costo_estandar
+		dataType: double
+		lineageTag: e724060d-ce88-41eb-ac5e-5d9ea4a44b1b
+		summarizeBy: sum
+		sourceColumn: costo_estandar
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column costo_total
+		dataType: double
+		lineageTag: fe726a4b-1797-495e-b6a0-6e565f45ce02
+		summarizeBy: sum
+		sourceColumn: costo_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margen_bruto
+		dataType: double
+		lineageTag: 141e8ff9-e05d-4869-a5d1-da36b6b8a196
+		summarizeBy: sum
+		sourceColumn: margen_bruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_margen
+		dataType: double
+		lineageTag: 4197c4d0-456a-40e4-8225-3aa3c9cc9d78
+		summarizeBy: sum
+		sourceColumn: pct_margen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'marts fact_ventas' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_fact_ventas = Origen{[Schema="marts",Item="fact_ventas"]}[Data]
+				in
+				    marts_fact_ventas
+
+	annotation PBI_ResultType = Table
+

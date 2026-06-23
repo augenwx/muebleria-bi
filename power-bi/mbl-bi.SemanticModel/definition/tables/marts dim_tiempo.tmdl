@@ -1,0 +1,109 @@
+table 'marts dim_tiempo'
+	lineageTag: 7736c31d-be82-44d4-9e26-a0256f130b71
+
+	column fecha_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ff2c46c4-56da-40a8-93a3-a7e27a6181a6
+		summarizeBy: none
+		sourceColumn: fecha_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8a2f0acc-cf7d-4509-b34b-9f3514c24417
+		summarizeBy: none
+		sourceColumn: fecha
+
+		variation Variación
+			isDefault
+			relationship: 1f6ea9b0-efb7-4271-aff3-5b4383f33b99
+			defaultHierarchy: LocalDateTable_4b75eb32-e99c-4750-9a2f-b4d468349af5.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 1adb30f4-fcc3-41d1-8d52-abb578c9622b
+		summarizeBy: sum
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: e89fdc26-230b-4d75-abab-e3a9ff358493
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_nombre
+		dataType: string
+		lineageTag: 24bd38ba-c394-4c73-8ee2-418e89becd3d
+		summarizeBy: none
+		sourceColumn: mes_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b8f8905-af99-43c3-a59b-28bfdd1d242d
+		summarizeBy: sum
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: e2ee67e5-2a2b-47d8-9b68-7c84fd80cacf
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 854d213c-e986-4257-8704-545e849d84f9
+		summarizeBy: sum
+		sourceColumn: dia_semana_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana_nombre
+		dataType: string
+		lineageTag: f80b9eca-848b-4e7f-b828-9484c01d1066
+		summarizeBy: none
+		sourceColumn: dia_semana_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column semana_anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 90c6b2a4-8cb1-4f9e-b975-c7f70892fb4d
+		summarizeBy: sum
+		sourceColumn: semana_anio
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_tiempo' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_tiempo = Origen{[Schema="marts",Item="dim_tiempo"]}[Data]
+				in
+				    marts_dim_tiempo
+
+	annotation PBI_ResultType = Table
+

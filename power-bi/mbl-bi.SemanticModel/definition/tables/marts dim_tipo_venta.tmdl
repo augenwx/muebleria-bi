@@ -1,0 +1,31 @@
+table 'marts dim_tipo_venta'
+	lineageTag: 54972a81-a89b-4d91-8bbf-d833aca787bd
+
+	column tipo_venta_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5309b498-d102-404d-890b-2d181144c1c8
+		summarizeBy: none
+		sourceColumn: tipo_venta_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_venta
+		dataType: string
+		lineageTag: a19b0efd-63e1-419b-afcc-1564f5784794
+		summarizeBy: none
+		sourceColumn: tipo_venta
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_tipo_venta' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_tipo_venta = Origen{[Schema="marts",Item="dim_tipo_venta"]}[Data]
+				in
+				    marts_dim_tipo_venta
+
+	annotation PBI_ResultType = Table
+

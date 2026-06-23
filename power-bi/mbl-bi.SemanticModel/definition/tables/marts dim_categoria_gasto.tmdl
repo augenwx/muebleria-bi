@@ -1,0 +1,39 @@
+table 'marts dim_categoria_gasto'
+	lineageTag: 198885f1-f4d1-47d3-936f-91ced033390c
+
+	column categoria_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 06892863-5d90-4064-8209-e37100370708
+		summarizeBy: none
+		sourceColumn: categoria_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column categoria
+		dataType: string
+		lineageTag: 6bf19f4d-ad1c-47c7-b8c4-c0d1ecea7065
+		summarizeBy: none
+		sourceColumn: categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_gasto
+		dataType: string
+		lineageTag: 1f0e1810-0965-4032-ba57-d74949117870
+		summarizeBy: none
+		sourceColumn: tipo_gasto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_categoria_gasto' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_categoria_gasto = Origen{[Schema="marts",Item="dim_categoria_gasto"]}[Data]
+				in
+				    marts_dim_categoria_gasto
+
+	annotation PBI_ResultType = Table
+

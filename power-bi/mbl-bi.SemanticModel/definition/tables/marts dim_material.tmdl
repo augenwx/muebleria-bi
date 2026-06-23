@@ -1,0 +1,66 @@
+table 'marts dim_material'
+	lineageTag: c1eb8a68-0b7d-4cc7-97f9-8f649185a6a0
+
+	column material_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 25f3cd94-2900-4e13-b06a-4c720808c3df
+		summarizeBy: none
+		sourceColumn: material_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 73a49db2-d9f7-4025-9367-ff218b0a646b
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidad_nombre
+		dataType: string
+		lineageTag: 4487fbb9-7c61-4db5-9b56-e32d2ac447c4
+		summarizeBy: none
+		sourceColumn: unidad_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidad_abreviatura
+		dataType: string
+		lineageTag: 0321d873-3cd0-4633-8891-c8b25fddd9b2
+		summarizeBy: none
+		sourceColumn: unidad_abreviatura
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_minimo
+		dataType: double
+		lineageTag: f00c9f85-4b17-4108-bf18-9f13a4d9f4f9
+		summarizeBy: none
+		sourceColumn: stock_minimo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column activo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3f57a516-2214-45eb-8f6b-f4355ea5fe29
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_material' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_material = Origen{[Schema="marts",Item="dim_material"]}[Data]
+				in
+				    marts_dim_material
+
+	annotation PBI_ResultType = Table
+

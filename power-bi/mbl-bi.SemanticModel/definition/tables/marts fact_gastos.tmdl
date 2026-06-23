@@ -1,0 +1,94 @@
+table 'marts fact_gastos'
+	lineageTag: ba3d8f42-3ab0-4322-af9f-5bffd3b677a0
+
+	column gasto_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 85839987-9df0-4a16-b322-de0507ff43b9
+		summarizeBy: sum
+		sourceColumn: gasto_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tiempo_key
+		dataType: int64
+		formatString: 0
+		lineageTag: df8f5a62-5db9-457e-a3e0-3b1f5596f9b1
+		summarizeBy: sum
+		sourceColumn: tiempo_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column categoria_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 31943ea9-00db-4ade-b360-90c80525c751
+		summarizeBy: none
+		sourceColumn: categoria_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 76e554d8-a474-4fde-aac2-238e66cbc6aa
+		summarizeBy: none
+		sourceColumn: usuario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f09e780-ee47-4999-a4ba-4de957bc8b58
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 0adee7b4-62ab-4d6a-879d-cf85b8883e9a
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column monto
+		dataType: double
+		lineageTag: 60298fe8-cbb4-4eff-b474-587952b95549
+		summarizeBy: sum
+		sourceColumn: monto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column detalle
+		dataType: string
+		lineageTag: f1af7d98-0449-456d-af55-4f2c910e89a8
+		summarizeBy: none
+		sourceColumn: detalle
+
+		annotation SummarizationSetBy = Automatic
+
+	column comprobante
+		dataType: string
+		lineageTag: 6b2d8150-1d2a-4d8d-b40c-419e087c111b
+		summarizeBy: none
+		sourceColumn: comprobante
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts fact_gastos' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_fact_gastos = Origen{[Schema="marts",Item="fact_gastos"]}[Data]
+				in
+				    marts_fact_gastos
+
+	annotation PBI_ResultType = Table
+

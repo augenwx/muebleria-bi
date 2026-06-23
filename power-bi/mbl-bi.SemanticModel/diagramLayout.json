@@ -1,0 +1,204 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 926.41184546631166,
+            "y": 1028.3198369738618
+          },
+          "nodeIndex": "marts dim_categoria_gasto",
+          "nodeLineageTag": "198885f1-f4d1-47d3-936f-91ced033390c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1508.8903505015944,
+            "y": 408.07961650271073
+          },
+          "nodeIndex": "marts dim_cliente",
+          "nodeLineageTag": "f52a8917-1408-40af-ae54-6a2aea4e7f9a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.92700807533623,
+            "y": 8.90755569857891
+          },
+          "nodeIndex": "marts dim_destino_prod",
+          "nodeLineageTag": "fcacb7a3-8077-48b5-9002-ca590d2b6d5e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3.8299779159339096,
+            "y": 934.10478298351813
+          },
+          "nodeIndex": "marts dim_material",
+          "nodeLineageTag": "c1eb8a68-0b7d-4cc7-97f9-8f649185a6a0",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1303.3524147994567,
+            "y": 4.7573552609056335
+          },
+          "nodeIndex": "marts dim_producto",
+          "nodeLineageTag": "77a04aa0-3756-4bce-bbb8-5b97b1d9b9c6",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 36.236272390395243,
+            "y": 0
+          },
+          "nodeIndex": "marts dim_proveedor",
+          "nodeLineageTag": "13fb0e5d-3fff-4881-acbf-c89a18b070ef",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 460.94916592732091,
+            "y": 464.29381112846909
+          },
+          "nodeIndex": "marts dim_tiempo",
+          "nodeLineageTag": "7736c31d-be82-44d4-9e26-a0256f130b71",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 939.72887240576506,
+            "y": 0
+          },
+          "nodeIndex": "marts dim_tipo_venta",
+          "nodeLineageTag": "54972a81-a89b-4d91-8bbf-d833aca787bd",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1187.8414072912069,
+            "y": 758.05684568607
+          },
+          "nodeIndex": "marts dim_usuario",
+          "nodeLineageTag": "2c1f9927-a8ce-4ce3-b7ed-8094deb12be9",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 619.32177925620067,
+            "y": 807.01581188251987
+          },
+          "nodeIndex": "marts fact_gastos",
+          "nodeLineageTag": "ba3d8f42-3ab0-4322-af9f-5bffd3b677a0",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 31.176444945026191,
+            "y": 447.94969891064062
+          },
+          "nodeIndex": "marts fact_inventario",
+          "nodeLineageTag": "2d9fdffe-9dfc-4fef-aec6-81046a537690",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 596.24994133896837,
+            "y": 36.698312358760269
+          },
+          "nodeIndex": "marts fact_produccion",
+          "nodeLineageTag": "4fc07e66-e533-4b45-a44b-2ac7dcc05201",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 945.577834368301,
+            "y": 407.00026590593575
+          },
+          "nodeIndex": "marts fact_ventas",
+          "nodeLineageTag": "43d80a4b-a8a8-48dc-b9f3-c1dc7144fb1f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1430.2071454168649,
+            "y": 1015.9159242793769
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "21777153-e05a-4b38-b2b7-1f7fc58c9b5c",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 44.905697313104092,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

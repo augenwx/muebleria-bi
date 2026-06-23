@@ -1,0 +1,80 @@
+table 'marts dim_proveedor'
+	lineageTag: 13fb0e5d-3fff-4881-acbf-c89a18b070ef
+
+	column proveedor_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4f0c5a22-6840-442b-928c-afaf1bbca5dd
+		summarizeBy: none
+		sourceColumn: proveedor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ruc
+		dataType: string
+		lineageTag: 6d93bc89-e7bb-4257-9763-f6eb37bbc2bb
+		summarizeBy: none
+		sourceColumn: ruc
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 7c63783b-e2f9-4914-8b54-fd82f0371a92
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column contacto
+		dataType: string
+		lineageTag: 976e129d-0223-4a8f-9d00-3c89d91870b7
+		summarizeBy: none
+		sourceColumn: contacto
+
+		annotation SummarizationSetBy = Automatic
+
+	column telefono
+		dataType: string
+		lineageTag: 56a1a748-aa0f-4e1e-9fce-1b417b10a297
+		summarizeBy: none
+		sourceColumn: telefono
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 00330595-afb8-428c-ae81-df904f650e67
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column direccion
+		dataType: string
+		lineageTag: 68399a4a-5fe8-4c82-b9b7-ad7100c91953
+		summarizeBy: none
+		sourceColumn: direccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a740df13-57ca-437d-85a5-1f1e842a44f0
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_proveedor' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_proveedor = Origen{[Schema="marts",Item="dim_proveedor"]}[Data]
+				in
+				    marts_dim_proveedor
+
+	annotation PBI_ResultType = Table
+

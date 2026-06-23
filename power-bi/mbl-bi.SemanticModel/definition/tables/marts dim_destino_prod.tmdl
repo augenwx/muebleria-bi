@@ -1,0 +1,31 @@
+table 'marts dim_destino_prod'
+	lineageTag: fcacb7a3-8077-48b5-9002-ca590d2b6d5e
+
+	column destino_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d952c67e-81d6-4d34-9e93-2a73558676ca
+		summarizeBy: none
+		sourceColumn: destino_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column destino
+		dataType: string
+		lineageTag: 2e02aba2-dbea-4cb5-a998-d68e4dd6127f
+		summarizeBy: none
+		sourceColumn: destino
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_destino_prod' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_destino_prod = Origen{[Schema="marts",Item="dim_destino_prod"]}[Data]
+				in
+				    marts_dim_destino_prod
+
+	annotation PBI_ResultType = Table
+

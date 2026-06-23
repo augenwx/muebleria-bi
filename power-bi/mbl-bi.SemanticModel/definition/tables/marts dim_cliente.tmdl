@@ -1,0 +1,117 @@
+table 'marts dim_cliente'
+	lineageTag: f52a8917-1408-40af-ae54-6a2aea4e7f9a
+
+	column cliente_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a880edd-63f6-4697-bb44-801b649a87c8
+		summarizeBy: none
+		sourceColumn: cliente_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column documento
+		dataType: string
+		lineageTag: dd096fb1-6050-41be-879c-8fc658915750
+		summarizeBy: none
+		sourceColumn: documento
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 6991a4b8-644e-4cde-9e5f-801179bb5a4a
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column razon_social
+		dataType: string
+		lineageTag: 66305057-1e3d-4fd7-a84b-952ff8360819
+		summarizeBy: none
+		sourceColumn: razon_social
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_cliente
+		dataType: string
+		lineageTag: 3a73670a-a329-4980-9ffe-5c163b516e85
+		summarizeBy: none
+		sourceColumn: tipo_cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column direccion
+		dataType: string
+		lineageTag: 2bae541a-8dae-4def-82f1-36e6f145a873
+		summarizeBy: none
+		sourceColumn: direccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column telefono
+		dataType: string
+		lineageTag: 1294b2dc-4a9b-4d87-9e4e-13952e06ac66
+		summarizeBy: none
+		sourceColumn: telefono
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 18c25ecb-1653-40f0-b3ec-59f6970442ff
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column limite_credito
+		dataType: double
+		lineageTag: 31671c25-5fff-4c60-bb62-f1fb351409d1
+		summarizeBy: none
+		sourceColumn: limite_credito
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estado
+		dataType: string
+		lineageTag: 2e6eb3ed-9ad2-4fac-a281-17aa1cf25662
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 97e5b820-36f0-47d6-aaac-5b12f807defc
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'tipo_cliente Jerarquía'
+		lineageTag: e074023d-5d02-4d60-8a7f-e895fc777f79
+
+		level tipo_cliente
+			lineageTag: 86fc1577-474c-4a71-a194-0da447fbe454
+			column: tipo_cliente
+
+		level nombre
+			lineageTag: a1c1e313-33a9-492e-b513-7ace82464295
+			column: nombre
+
+	partition 'marts dim_cliente' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("127.0.0.1:5434", "muebleria_dw"),
+				    marts_dim_cliente = Origen{[Schema="marts",Item="dim_cliente"]}[Data]
+				in
+				    marts_dim_cliente
+
+	annotation PBI_ResultType = Table
+

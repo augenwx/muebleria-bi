@@ -1,0 +1,33 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-PE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["marts fact_ventas","marts fact_inventario","marts fact_produccion","marts fact_gastos","marts dim_usuario","marts dim_tipo_venta","marts dim_proveedor","marts dim_producto","marts dim_destino_prod","marts dim_categoria_gasto","marts dim_cliente","marts dim_material","marts dim_tiempo","Medidas"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'marts fact_ventas'
+ref table 'marts fact_inventario'
+ref table 'marts fact_produccion'
+ref table 'marts fact_gastos'
+ref table 'marts dim_usuario'
+ref table 'marts dim_tipo_venta'
+ref table 'marts dim_proveedor'
+ref table 'marts dim_producto'
+ref table 'marts dim_destino_prod'
+ref table 'marts dim_categoria_gasto'
+ref table 'marts dim_cliente'
+ref table 'marts dim_material'
+ref table 'marts dim_tiempo'
+ref table DateTableTemplate_dda4ac9a-d92f-49d1-8aaa-122bc11aac33
+ref table LocalDateTable_4b75eb32-e99c-4750-9a2f-b4d468349af5
+ref table Medidas
+
+ref cultureInfo es-ES
+
