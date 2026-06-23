@@ -1,0 +1,31 @@
+site_name: Muebleria BI
+site_description: Documentacion tecnica del proyecto End-to-End de Business Intelligence para Muebleria.
+site_author: Grimaldo Arredondo Martinez y Jose Miguel Condo Huamani
+
+theme:
+  name: material
+  language: es
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - content.code.copy
+
+nav:
+  - Inicio y Resumen: index.md
+  - Arquitectura e Ingesta: arquitectura.md
+  - Modelo Estrella y dbt: data_warehouse.md
+  - Metricas DAX y Visualizacion: dashboard.md
+  - Calidad y Control de Datos: validacion.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - tables
