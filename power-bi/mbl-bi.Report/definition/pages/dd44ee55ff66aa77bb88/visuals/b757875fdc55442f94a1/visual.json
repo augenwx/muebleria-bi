@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b757875fdc55442f94a1",
+  "position": {
+    "x": 240.13802576257561,
+    "y": 148.19946732776094,
+    "z": 3000,
+    "height": 300.51558652573749,
+    "width": 500.85931087622913,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_categoria_gasto"
+                    }
+                  },
+                  "Property": "tipo_gasto"
+                }
+              },
+              "queryRef": "marts dim_categoria_gasto.tipo_gasto",
+              "nativeQueryRef": "tipo_gasto",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Gastos"
+                }
+              },
+              "queryRef": "Medidas.Total Gastos",
+              "nativeQueryRef": "Total Gastos"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "35b8b7da89259834dd13",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_categoria_gasto"
+              }
+            },
+            "Property": "tipo_gasto"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0c448df86be199511908",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Gastos"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

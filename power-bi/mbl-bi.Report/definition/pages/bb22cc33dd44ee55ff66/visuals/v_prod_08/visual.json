@@ -5,8 +5,8 @@
     "x": 15,
     "y": 400,
     "z": 7,
-    "width": 1250,
     "height": 305,
+    "width": 1250,
     "tabOrder": 7
   },
   "visual": {
@@ -121,5 +121,93 @@
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0e19496a2581eca6b32b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_producto"
+              }
+            },
+            "Property": "nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "46894e1bb7b2890b57a1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_destino_prod"
+              }
+            },
+            "Property": "destino"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2fb04270c3a9d0066964",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Unidades Producidas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2b87890940c2cbb5ad37",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Costo Materia Prima"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "265c54b77b7b678b7a55",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Costo Produccion"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5db3297a05027a3cce08",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Costo Unitario Real"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

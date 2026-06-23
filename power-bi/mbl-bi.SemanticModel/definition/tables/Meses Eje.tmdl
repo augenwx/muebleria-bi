@@ -1,0 +1,35 @@
+table 'Meses Eje'
+	lineageTag: 985433c2-885c-4f0b-bc98-86b48c956886
+
+	column mes
+		formatString: 0
+		lineageTag: f01f9353-bd78-4648-bc3f-88ad48341039
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_nombre
+		lineageTag: 54acabb1-f7de-4d1f-8cbe-0fbbccf36a0b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [mes_nombre]
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Meses Eje' = calculated
+		mode: import
+		source =
+				
+				DISTINCT(
+				    SELECTCOLUMNS(
+				        'marts dim_tiempo',
+				        "mes", 'marts dim_tiempo'[mes],
+				        "mes_nombre", 'marts dim_tiempo'[mes_nombre]
+				    )
+				)
+
+	annotation PBI_Id = ea7751c6426d4337ad1f6cb994d26207
+

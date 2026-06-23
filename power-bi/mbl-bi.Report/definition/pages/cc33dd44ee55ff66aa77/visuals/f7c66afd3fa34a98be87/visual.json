@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "f7c66afd3fa34a98be87",
+  "position": {
+    "x": 50,
+    "y": 320,
+    "z": 3000,
+    "height": 350,
+    "width": 750,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meses Eje"
+                    }
+                  },
+                  "Property": "mes_nombre"
+                }
+              },
+              "queryRef": "Meses Eje.mes_nombre",
+              "nativeQueryRef": "mes_nombre",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Entradas Material"
+                }
+              },
+              "queryRef": "Medidas.Entradas Material",
+              "nativeQueryRef": "Entradas Material"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Salidas Material"
+                }
+              },
+              "queryRef": "Medidas.Salidas Material",
+              "nativeQueryRef": "Salidas Material"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

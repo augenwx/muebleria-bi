@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "53501fd2dea9a4c460b2",
+  "displayName": "Comparativo anual",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "264L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "46ea09bd1eb1354f2085",
+      "target": "ec07395e755072421e7a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ec07395e755072421e7a",
+      "target": "6cdf9954e6c0c04cc8a1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ec07395e755072421e7a",
+      "target": "31551c5b08774e0bdbaa",
+      "type": "NoFilter"
+    }
+  ]
+}

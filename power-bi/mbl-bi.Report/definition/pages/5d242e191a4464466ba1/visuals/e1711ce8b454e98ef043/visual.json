@@ -1,0 +1,130 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "e1711ce8b454e98ef043",
+  "position": {
+    "x": 0,
+    "y": 250.61622642169115,
+    "z": 2000,
+    "height": 77.333007010121847,
+    "width": 535.60267818121429,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Mismo Periodo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Mismo Periodo",
+              "nativeQueryRef": "Ventas Anio Previo Mismo Periodo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Completo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Completo",
+              "nativeQueryRef": "Ventas Anio Previo Completo"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "234.04930138937902D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Medidas.Ventas Anio Previo Mismo Periodo"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a63d812758a07560a779",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "dbfe4429009453aca543",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Ventas Anio Previo Mismo Periodo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4732afd408d2976cc9ec",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Ventas Anio Previo Completo"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

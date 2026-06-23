@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "5518356da462f5e32e85",
+  "position": {
+    "x": 1.4320927224096638,
+    "y": 346.56643882313864,
+    "z": 3000,
+    "height": 67.3083579532542,
+    "width": 286.41854448193277,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Venta Mes Anterior"
+                }
+              },
+              "queryRef": "Medidas.Venta Mes Anterior",
+              "nativeQueryRef": "Venta Mes Anterior"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

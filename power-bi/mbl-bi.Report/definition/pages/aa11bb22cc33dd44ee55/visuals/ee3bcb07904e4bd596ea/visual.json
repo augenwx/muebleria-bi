@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "ee3bcb07904e4bd596ea",
+  "position": {
+    "x": 1062.09618251562,
+    "y": 0,
+    "z": 1000,
+    "height": 98.799644885173961,
+    "width": 203.08815893063536,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Costo Produccion"
+                }
+              },
+              "queryRef": "Medidas.Costo Produccion",
+              "nativeQueryRef": "Costo Produccion"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e89b4a2edb271a0ac040",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Costo Produccion"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

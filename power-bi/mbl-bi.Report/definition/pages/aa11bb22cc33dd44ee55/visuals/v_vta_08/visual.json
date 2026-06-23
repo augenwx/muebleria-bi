@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "v_vta_08",
   "position": {
-    "x": 15,
-    "y": 400,
+    "x": 15.094390190790467,
+    "y": 399.31523141091145,
     "z": 7,
-    "height": 305,
-    "width": 620,
+    "height": 306.00445568602493,
+    "width": 724.53072915794235,
     "tabOrder": 7
   },
   "visual": {
@@ -53,5 +53,37 @@
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e5f2819bcec84aabbde4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_tiempo"
+              }
+            },
+            "Property": "fecha"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9d3c53f482a6668b94d3",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

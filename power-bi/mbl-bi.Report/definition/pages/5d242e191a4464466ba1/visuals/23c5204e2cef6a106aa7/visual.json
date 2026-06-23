@@ -1,0 +1,168 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "23c5204e2cef6a106aa7",
+  "position": {
+    "x": 1.5425461803528726,
+    "y": 413.40237633456985,
+    "z": 1000,
+    "height": 306.96668989022163,
+    "width": 509.04023951644797,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_tiempo"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "marts dim_tiempo.anio",
+              "nativeQueryRef": "anio",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_tiempo"
+                    }
+                  },
+                  "Property": "mes_nombre"
+                }
+              },
+              "queryRef": "marts dim_tiempo.mes_nombre",
+              "nativeQueryRef": "mes_nombre",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "Total Ventas"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "marts dim_tiempo.mes_nombre"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_tiempo"
+                    }
+                  },
+                  "Property": "mes_nombre"
+                }
+              }
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7075a55a4a4ec1905cb3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_tiempo"
+              }
+            },
+            "Property": "anio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "84b63e71006017a5440c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_tiempo"
+              }
+            },
+            "Property": "mes_nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "517594e6a5d330506ec8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "5d242e191a4464466ba1",
+  "displayName": "Comparativo anual y mensual",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "264L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "48f1fdfecef97337d16d",
+      "target": "23c5204e2cef6a106aa7",
+      "type": "NoFilter"
+    },
+    {
+      "source": "23c5204e2cef6a106aa7",
+      "target": "e1711ce8b454e98ef043",
+      "type": "NoFilter"
+    },
+    {
+      "source": "23c5204e2cef6a106aa7",
+      "target": "87cebcbfde8b9e154998",
+      "type": "NoFilter"
+    },
+    {
+      "source": "d50ad78b430ce89f7a7c",
+      "target": "23c5204e2cef6a106aa7",
+      "type": "NoFilter"
+    },
+    {
+      "source": "d50ad78b430ce89f7a7c",
+      "target": "87cebcbfde8b9e154998",
+      "type": "NoFilter"
+    },
+    {
+      "source": "d50ad78b430ce89f7a7c",
+      "target": "00f45ac13257d922bc46",
+      "type": "NoFilter"
+    }
+  ]
+}

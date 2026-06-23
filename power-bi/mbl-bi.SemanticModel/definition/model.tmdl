@@ -28,6 +28,8 @@ ref table 'marts dim_tiempo'
 ref table DateTableTemplate_dda4ac9a-d92f-49d1-8aaa-122bc11aac33
 ref table LocalDateTable_4b75eb32-e99c-4750-9a2f-b4d468349af5
 ref table Medidas
+ref table 'Meses Eje'
+ref table 'Dias Eje'
 
 ref cultureInfo es-ES
 

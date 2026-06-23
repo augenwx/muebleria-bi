@@ -1,55 +1,55 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
-  "name": "v_vta_03",
+  "name": "814dde5c26724ae99da1",
   "position": {
-    "x": 434.99288095277979,
-    "y": 15.094390190790467,
-    "z": 2,
-    "height": 100.17186217524582,
+    "x": 828.81924320340374,
+    "y": 478.90383423507933,
+    "z": 2000,
+    "height": 168.78272667883886,
     "width": 200.34372435049164,
-    "tabOrder": 2
+    "tabOrder": 2000
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "slicer",
     "query": {
       "queryState": {
-        "Data": {
+        "Values": {
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Medidas"
+                      "Entity": "marts dim_tiempo"
                     }
                   },
-                  "Property": "Margen Bruto"
+                  "Property": "mes_nombre"
                 }
               },
-              "queryRef": "Medidas.Margen Bruto",
-              "nativeQueryRef": "Margen Bruto"
+              "queryRef": "marts dim_tiempo.mes_nombre",
+              "nativeQueryRef": "mes_nombre",
+              "active": true
             }
           ]
         }
       }
-    },
-    "drillFilterOtherVisuals": true
+    }
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "fc92d7fd042aac238b8a",
+        "name": "a5a72b49de4c16c8cd65",
         "field": {
-          "Measure": {
+          "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Medidas"
+                "Entity": "marts dim_tiempo"
               }
             },
-            "Property": "Margen Bruto"
+            "Property": "mes_nombre"
           }
         },
-        "type": "Advanced"
+        "type": "Categorical"
       }
     ]
   }

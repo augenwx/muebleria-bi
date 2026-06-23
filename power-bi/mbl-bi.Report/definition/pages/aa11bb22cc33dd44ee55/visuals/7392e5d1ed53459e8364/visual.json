@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "7392e5d1ed53459e8364",
+  "position": {
+    "x": 418.52627347191748,
+    "y": 10.977738320574884,
+    "z": 1000,
+    "height": 109.77738320574885,
+    "width": 198.97150706041978,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Gastos"
+                }
+              },
+              "queryRef": "Medidas.Total Gastos",
+              "nativeQueryRef": "Total Gastos"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a42a8d7e7d42c275b978",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Gastos"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

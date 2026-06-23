@@ -1,0 +1,181 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "69d9caf1f9c6a2cee548",
+  "position": {
+    "x": 830.94221534809265,
+    "y": 0,
+    "z": 9000,
+    "height": 197.42244123518515,
+    "width": 193.00253583439741,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "kpi",
+    "query": {
+      "queryState": {
+        "Goal": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Venta Mes Anterior"
+                }
+              },
+              "queryRef": "Medidas.Venta Mes Anterior",
+              "nativeQueryRef": "Venta Mes Anterior"
+            }
+          ]
+        },
+        "Indicator": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            }
+          ]
+        },
+        "TrendLine": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dias Eje"
+                    }
+                  },
+                  "Property": "dia"
+                }
+              },
+              "queryRef": "Dias Eje.dia",
+              "nativeQueryRef": "dia1",
+              "format": "G"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "Total Ventas Eje Dia"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "indicator": [
+        {
+          "properties": {
+            "indicatorDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Titulo Ventas Mes Actual vs Mes Anterior"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1f2cc96d01564a0c9cd0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Venta Mes Anterior"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "8a1a8801a2a164b05103",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5adbc69e0cc034910e1b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dias Eje"
+              }
+            },
+            "Property": "dia"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b52b72d0294084dc7786",
+  "position": {
+    "x": 508.39291645543062,
+    "y": 455.40548572627307,
+    "z": 7000,
+    "height": 264.93715364578782,
+    "width": 771.89797737880883,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dias Eje"
+                    }
+                  },
+                  "Property": "dia"
+                }
+              },
+              "queryRef": "Dias Eje.dia",
+              "nativeQueryRef": "dia1",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas Eje Dia"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas Eje Dia",
+              "nativeQueryRef": "Total Ventas Eje Dia"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Venta Mes Anterior Eje Dia"
+                }
+              },
+              "queryRef": "Medidas.Venta Mes Anterior Eje Dia",
+              "nativeQueryRef": "Venta Mes Anterior Eje Dia"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "Total Ventas Eje Dia"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Titulo Ventas Mes Actual vs Mes Anterior"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

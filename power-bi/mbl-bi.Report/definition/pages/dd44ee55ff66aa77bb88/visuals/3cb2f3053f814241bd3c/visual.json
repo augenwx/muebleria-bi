@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "3cb2f3053f814241bd3c",
+  "position": {
+    "x": 68.610864503593035,
+    "y": 299.1433692356656,
+    "z": 2000,
+    "height": 98.799644885173961,
+    "width": 200.34372435049164,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_tiempo"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "marts dim_tiempo.anio",
+              "nativeQueryRef": "anio",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "be442bce50e39c0d16c2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_tiempo"
+              }
+            },
+            "Property": "anio"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

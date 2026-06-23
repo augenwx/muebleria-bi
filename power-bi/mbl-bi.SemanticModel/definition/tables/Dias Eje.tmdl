@@ -1,0 +1,23 @@
+table 'Dias Eje'
+	lineageTag: c143844a-4101-4127-95d1-e9b0c0240699
+
+	column dia
+		formatString: 0
+		lineageTag: 9df52cbe-b5fa-4668-be97-95abdbaa9959
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dias Eje' = calculated
+		mode: import
+		source =
+				
+				SELECTCOLUMNS(
+				    GENERATESERIES(1, 31, 1),
+				    "dia", [Value]
+				)
+
+	annotation PBI_Id = 8f39c67af0d34c71a2e1181736d41c66
+

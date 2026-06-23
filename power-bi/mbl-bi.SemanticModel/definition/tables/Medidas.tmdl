@@ -189,6 +189,242 @@ table Medidas
 		formatString: 0.00 %
 		lineageTag: b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
 
+	measure 'Ventas Anio Previo Mismo Periodo' =
+			SUMX(
+			    VALUES('marts dim_tiempo'[anio]),
+			    VAR anio_actual = 'marts dim_tiempo'[anio]
+			    RETURN
+			        CALCULATE(
+			            [Total Ventas],
+			            REMOVEFILTERS('marts dim_tiempo'),
+			            'marts dim_tiempo'[anio] = anio_actual - 1,
+			            VALUES('marts dim_tiempo'[mes])
+			        )
+			)
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp01-0000-0000-0000-000000000001
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Variacion Ventas vs Anio Previo' = [Total Ventas] - [Ventas Anio Previo Mismo Periodo]
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp02-0000-0000-0000-000000000002
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure '% Variacion Ventas vs Anio Previo' = DIVIDE([Variacion Ventas vs Anio Previo], [Ventas Anio Previo Mismo Periodo], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp03-0000-0000-0000-000000000003
+
+	measure 'Venta Mes Anterior' =
+			SUMX(
+			    SUMMARIZE('marts dim_tiempo', 'marts dim_tiempo'[anio], 'marts dim_tiempo'[mes]),
+			    VAR anio_actual = 'marts dim_tiempo'[anio]
+			    VAR mes_actual = 'marts dim_tiempo'[mes]
+			    VAR anio_previo = IF(mes_actual = 1, anio_actual - 1, anio_actual)
+			    VAR mes_previo = IF(mes_actual = 1, 12, mes_actual - 1)
+			    RETURN
+			        CALCULATE(
+			            [Total Ventas],
+			            REMOVEFILTERS('marts dim_tiempo'),
+			            'marts dim_tiempo'[anio] = anio_previo,
+			            'marts dim_tiempo'[mes] = mes_previo
+			        )
+			)
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp04-0000-0000-0000-000000000004
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Variacion Ventas vs Mes Anterior' = [Total Ventas] - [Venta Mes Anterior]
+		formatString: "S/"\ #,0.00;-"S/"\ #,0.00;"S/"\ #,0.00
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp05-0000-0000-0000-000000000005
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure '% Variacion Ventas vs Mes Anterior' = DIVIDE([Variacion Ventas vs Mes Anterior], [Venta Mes Anterior], 0)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp06-0000-0000-0000-000000000006
+
+	measure 'KPI Var Ventas Anual' = IF([% Variacion Ventas vs Anio Previo] >= 0, UNICHAR(9650), UNICHAR(9660))
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp07-0000-0000-0000-000000000007
+
+	measure 'KPI Var Ventas Anual Color' = IF([% Variacion Ventas vs Anio Previo] >= 0, "Green", "Red")
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp08-0000-0000-0000-000000000008
+
+	measure 'KPI Var Ventas Mensual' = IF([% Variacion Ventas vs Mes Anterior] >= 0, UNICHAR(9650), UNICHAR(9660))
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp09-0000-0000-0000-000000000009
+
+	measure 'KPI Var Ventas Mensual Color' = IF([% Variacion Ventas vs Mes Anterior] >= 0, "Green", "Red")
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp10-0000-0000-0000-000000000010
+
+	measure 'Titulo Ventas Actual vs Anio Previo' =
+			VAR __ultf = LASTNONBLANK('marts dim_tiempo'[fecha], [Total Ventas])
+			VAR __anioact = FORMAT(__ultf, "yyyy")
+			VAR __anioprev = FORMAT(DATE(YEAR(__ultf) - 1, 1, 1), "yyyy")
+			RETURN __anioact & " VS " & __anioprev
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp11-0000-0000-0000-000000000011
+
+	measure 'Titulo Ventas Mes Actual vs Mes Anterior' =
+			VAR __ultf = LASTNONBLANK('marts dim_tiempo'[fecha], [Total Ventas])
+			VAR __mesact = FORMAT(__ultf, "MMMM yyyy")
+			VAR __mesprev = FORMAT(EDATE(__ultf, -1), "MMMM yyyy")
+			RETURN __mesact & " VS " & __mesprev
+		displayFolder: 05 Comparativas Temporales
+		lineageTag: 05comp12-0000-0000-0000-000000000012
+
+	measure 'Ventas Anio Previo Completo' =
+			
+			VAR __anio_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[anio])
+			VAR __mes_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[mes])
+			VAR __en_mes =
+			    ISINSCOPE('marts dim_tiempo'[mes_nombre])
+			        || ISINSCOPE('marts dim_tiempo'[mes])
+			RETURN
+			    IF(
+			        ISBLANK(__anio_actual),
+			        BLANK(),
+			        IF(
+			            __en_mes,
+			            CALCULATE(
+			                [Total Ventas],
+			                REMOVEFILTERS('marts dim_tiempo'),
+			                'marts dim_tiempo'[anio] = __anio_actual - 1,
+			                'marts dim_tiempo'[mes] = __mes_actual
+			            ),
+			            CALCULATE(
+			                [Total Ventas],
+			                REMOVEFILTERS('marts dim_tiempo'),
+			                'marts dim_tiempo'[anio] = __anio_actual - 1
+			            )
+			        )
+			    )
+		displayFolder: 02 Tiempo - Año previo
+		lineageTag: 27ce48a0-f29d-4c97-a8b8-2db0ba40ca38
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Total Ventas Eje Mes' =
+			
+			VAR __anio =
+			    SELECTEDVALUE('marts dim_tiempo'[anio])
+			VAR __mes =
+			    SELECTEDVALUE('Meses Eje'[mes])
+			RETURN
+			    CALCULATE(
+			        [Total Ventas],
+			        REMOVEFILTERS('marts dim_tiempo'),
+			        'marts dim_tiempo'[anio] = __anio,
+			        'marts dim_tiempo'[mes] = __mes
+			    )
+		displayFolder: 04 Auxiliares
+		lineageTag: 9fce255d-7288-433d-8a46-00c36f6844a2
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Ventas Anio Previo Completo Eje Mes' =
+			
+			VAR __anio =
+			    SELECTEDVALUE('marts dim_tiempo'[anio])
+			VAR __mes =
+			    SELECTEDVALUE('Meses Eje'[mes])
+			RETURN
+			    CALCULATE(
+			        [Total Ventas],
+			        REMOVEFILTERS('marts dim_tiempo'),
+			        'marts dim_tiempo'[anio] = __anio - 1,
+			        'marts dim_tiempo'[mes] = __mes
+			    )
+		displayFolder: 04 Auxiliares
+		lineageTag: 04e22a2f-5bf6-4ca7-b997-e6c2bbff1ed9
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Total Ventas Eje Dia' =
+			
+			VAR __anio_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[anio])
+			VAR __mes_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[mes])
+			VAR __dia_eje =
+			    SELECTEDVALUE('Dias Eje'[dia])
+			RETURN
+			    CALCULATE(
+			        [Total Ventas],
+			        REMOVEFILTERS('marts dim_tiempo'),
+			        'marts dim_tiempo'[anio] = __anio_actual,
+			        'marts dim_tiempo'[mes] = __mes_actual,
+			        'marts dim_tiempo'[dia] = __dia_eje
+			    )
+		displayFolder: 04 Auxiliares
+		lineageTag: ba1f7be2-da60-45f8-9f88-94fc9f64850a
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Venta Mes Anterior Eje Dia' =
+			
+			VAR __anio_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[anio])
+			VAR __mes_actual =
+			    SELECTEDVALUE('marts dim_tiempo'[mes])
+			VAR __anio_previo =
+			    IF(__mes_actual = 1, __anio_actual - 1, __anio_actual)
+			VAR __mes_previo =
+			    IF(__mes_actual = 1, 12, __mes_actual - 1)
+			VAR __dia_eje =
+			    SELECTEDVALUE('Dias Eje'[dia])
+			RETURN
+			    CALCULATE(
+			        [Total Ventas],
+			        REMOVEFILTERS('marts dim_tiempo'),
+			        'marts dim_tiempo'[anio] = __anio_previo,
+			        'marts dim_tiempo'[mes] = __mes_previo,
+			        'marts dim_tiempo'[dia] = __dia_eje
+			    )
+		displayFolder: 04 Auxiliares
+		lineageTag: 511a5944-29a4-4f46-b803-0edd8cf432b3
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'Ventas Meta Anual' =
+			
+			[Ventas Anio Previo Mismo Periodo] * 1.20
+		displayFolder: 02 Tiempo - Año previo
+		lineageTag: 56c04a86-b292-4de4-8ad5-4f8889e0b327
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-PE"}
+
+	measure 'KPI Var Ventas Color' =
+			
+			IF(
+			    [% Variacion Ventas vs Anio Previo] >= 0,
+			    "Green",
+			    "Red"
+			)
+		lineageTag: fbbc6c05-b295-4996-a095-023e3719fe8f
+
+	measure 'KPI Var Ventas' =
+			
+			IF(
+			    [% Variacion Ventas vs Anio Previo] >= 0,
+			    UNICHAR(9650),
+			    UNICHAR(9660)
+			)
+		lineageTag: 5abc55ee-e603-48c3-9771-d6b856c8bf51
+
 	column Columna1
 		dataType: string
 		lineageTag: 0120d0da-5ea1-4600-865b-ad4b093b4930

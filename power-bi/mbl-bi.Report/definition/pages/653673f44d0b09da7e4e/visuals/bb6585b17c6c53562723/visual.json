@@ -1,0 +1,322 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "bb6585b17c6c53562723",
+  "position": {
+    "x": 0,
+    "y": 359.52092999882746,
+    "z": 2000,
+    "height": 344.42653980803703,
+    "width": 1026.4185329737518,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_producto"
+                    }
+                  },
+                  "Property": "nombre"
+                }
+              },
+              "queryRef": "marts dim_producto.nombre",
+              "nativeQueryRef": "nombre",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Mismo Periodo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Mismo Periodo",
+              "nativeQueryRef": "Ventas Anio Previo Mismo Periodo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Variacion Ventas vs Anio Previo"
+                }
+              },
+              "queryRef": "Medidas.Variacion Ventas vs Anio Previo",
+              "nativeQueryRef": "Variacion Ventas vs Anio Previo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Variacion Ventas vs Anio Previo"
+                }
+              },
+              "queryRef": "Medidas.% Variacion Ventas vs Anio Previo",
+              "nativeQueryRef": "% Variacion Ventas vs Anio Previo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "KPI Var Ventas"
+                }
+              },
+              "queryRef": "Medidas.KPI Var Ventas",
+              "nativeQueryRef": "KPI Var Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "KPI Var Ventas Color"
+                }
+              },
+              "queryRef": "Medidas.KPI Var Ventas Color",
+              "nativeQueryRef": "KPI Var Ventas Color"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "KPI Var Ventas"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "marts dim_producto.nombre"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_producto"
+                    }
+                  },
+                  "Property": "nombre"
+                }
+              }
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "values": [
+        {
+          "properties": {},
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Medidas.KPI Var Ventas"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Medidas"
+                        }
+                      },
+                      "Property": "KPI Var Ventas Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "metadata": "Medidas.KPI Var Ventas"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9cd1677889a053484e97",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_producto"
+              }
+            },
+            "Property": "nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b7e2e420019977496a83",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e0b02bf7ac251c94a583",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Ventas Anio Previo Mismo Periodo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4419f6d05ca4176e01b1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Variacion Ventas vs Anio Previo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "51a353985c80c34d0be8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "% Variacion Ventas vs Anio Previo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ef2fcff501468ead7d72",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "KPI Var Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "8f1c1466e65b545a2a0a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "KPI Var Ventas Color"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

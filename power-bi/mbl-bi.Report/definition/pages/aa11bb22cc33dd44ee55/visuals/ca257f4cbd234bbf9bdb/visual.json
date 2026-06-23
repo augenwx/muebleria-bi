@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "ca257f4cbd234bbf9bdb",
+  "position": {
+    "x": 1042.885140454614,
+    "y": 91.938558434814652,
+    "z": 1000,
+    "height": 86.449689274527216,
+    "width": 200.34372435049164,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Margen Bruto"
+                }
+              },
+              "queryRef": "Medidas.Margen Bruto",
+              "nativeQueryRef": "Margen Bruto"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "b162efe96db74ed0b9d8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Margen Bruto"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "502766906427e21ebc03",
+  "position": {
+    "x": 528.44221456916591,
+    "y": 378.07247871615124,
+    "z": 4000,
+    "height": 342.27016065590965,
+    "width": 751.84867926507354,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Meses Eje"
+                    }
+                  },
+                  "Property": "mes_nombre"
+                }
+              },
+              "queryRef": "Meses Eje.mes_nombre",
+              "nativeQueryRef": "mes_nombre",
+              "active": true
+            }
+          ],
+          "showAll": true
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas Eje Mes"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas Eje Mes",
+              "nativeQueryRef": "Total Ventas Eje Mes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Completo Eje Mes"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Completo Eje Mes",
+              "nativeQueryRef": "Ventas Anio Previo Completo Eje Mes"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Titulo Ventas Actual vs Anio Previo"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "b939a6d5b3c54b6a4595",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Meses Eje"
+              }
+            },
+            "Property": "mes_nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "23a004708d7e75b5aa69",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas Eje Mes"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "add50323c8dc8167b265",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Ventas Anio Previo Completo Eje Mes"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

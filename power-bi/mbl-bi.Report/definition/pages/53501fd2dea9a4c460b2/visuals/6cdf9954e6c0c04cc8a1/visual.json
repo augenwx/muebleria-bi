@@ -1,0 +1,84 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "6cdf9954e6c0c04cc8a1",
+  "position": {
+    "x": 723.20682481688016,
+    "y": 214.81390836144956,
+    "z": 2000,
+    "height": 77.333007010121847,
+    "width": 545.62732723808188,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Mismo Periodo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Mismo Periodo",
+              "nativeQueryRef": "Ventas Anio Previo Mismo Periodo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Completo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Completo",
+              "nativeQueryRef": "Ventas Anio Previo Completo"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "234.04930138937902D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Medidas.Ventas Anio Previo Mismo Periodo"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

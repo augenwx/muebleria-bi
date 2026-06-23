@@ -53,5 +53,37 @@
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "cb9bef0107c4da18cce5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_material"
+              }
+            },
+            "Property": "nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8c461e7d70a9802503e7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Entradas Material"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

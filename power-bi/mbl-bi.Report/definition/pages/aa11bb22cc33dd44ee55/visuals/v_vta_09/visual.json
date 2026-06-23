@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "v_vta_09",
   "position": {
-    "x": 645,
-    "y": 400,
+    "x": 727.27516373808612,
+    "y": 399.31523141091145,
     "z": 8,
-    "width": 620,
-    "height": 305,
+    "height": 306.00445568602493,
+    "width": 525.55922209752259,
     "tabOrder": 8
   },
   "visual": {
@@ -92,13 +92,13 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Medidas"
+                    "Entity": "marts dim_cliente"
                   }
                 },
-                "Property": "Total Ventas"
+                "Property": "nombre"
               }
             },
             "direction": "Descending"
@@ -107,5 +107,79 @@
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7367611d0717de140b37",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_cliente"
+              }
+            },
+            "Property": "nombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5c9969e706223698bb43",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_cliente"
+              }
+            },
+            "Property": "tipo_cliente"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e9b0d4be769e1ec72d97",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cc64f34cecc12ba3cd0e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Unidades"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fa492ab25b874409a11a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "% Margen"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

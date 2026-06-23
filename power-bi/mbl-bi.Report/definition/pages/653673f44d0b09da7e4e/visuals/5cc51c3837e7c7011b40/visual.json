@@ -1,0 +1,224 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "5cc51c3837e7c7011b40",
+  "position": {
+    "x": 0,
+    "y": 192.11042061006049,
+    "z": 1000,
+    "height": 150.94390190790466,
+    "width": 1026.4185329737518,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_tiempo"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "marts dim_tiempo.anio",
+              "nativeQueryRef": "anio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Total Ventas"
+                }
+              },
+              "queryRef": "Medidas.Total Ventas",
+              "nativeQueryRef": "Total Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Ventas Anio Previo Mismo Periodo"
+                }
+              },
+              "queryRef": "Medidas.Ventas Anio Previo Mismo Periodo",
+              "nativeQueryRef": "Ventas Anio Previo Mismo Periodo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Variacion Ventas vs Anio Previo"
+                }
+              },
+              "queryRef": "Medidas.Variacion Ventas vs Anio Previo",
+              "nativeQueryRef": "Variacion Ventas vs Anio Previo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Variacion Ventas vs Anio Previo"
+                }
+              },
+              "queryRef": "Medidas.% Variacion Ventas vs Anio Previo",
+              "nativeQueryRef": "% Variacion Ventas vs Anio Previo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "KPI Var Ventas"
+                }
+              },
+              "queryRef": "Medidas.KPI Var Ventas",
+              "nativeQueryRef": "KPI Var Ventas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "KPI Var Ventas Color"
+                }
+              },
+              "queryRef": "Medidas.KPI Var Ventas Color",
+              "nativeQueryRef": "KPI Var Ventas Color"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3df213f53752dcc6923d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_tiempo"
+              }
+            },
+            "Property": "anio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "611f43087d8269ab76a4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Total Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "718bd0cde2c130a9e647",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Ventas Anio Previo Mismo Periodo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "35791a19a52046068a0a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Variacion Ventas vs Anio Previo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "addc0b4c017787382ca1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "% Variacion Ventas vs Anio Previo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ba4b6ae90e0691c2350c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "KPI Var Ventas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f4e4da0002b52987c0d2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "KPI Var Ventas Color"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
